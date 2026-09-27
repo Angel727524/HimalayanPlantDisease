@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prediction Result</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f8f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2d5a3d;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2d5a3d;
+        }
+
+        h3 {
+            color: #444;
+        }
+
+        .prediction {
+            text-align: center;
+        }
+
+        .plant-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2d5a3d;
+        }
+
+        .confidence {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .disease {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .severity {
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #2d5a3d;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #21452e;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card prediction">
+
+        <h1>🌿 AI Prediction</h1>
+
+        <div class="plant-name">
+            {{ predicted_plant }}
+        </div>
+
+        <p class="confidence">
+            AI Confidence: {{ "%.2f"|format(confidence) }}%
+        </p>
+
+    </div>
+
+
+    {% if plant %}
+
+    <div class="card">
+
+        <h2>🌱 Plant Information</h2>
+
+        <p>
+            <strong>Plant Name:</strong>
+            {{ plant[0] }}
+        </p>
+
+        <p>
+            <strong>Scientific Name:</strong>
+            {{ plant[1] }}
+        </p>
+
+        <p>
+            <strong>Local Name:</strong>
+            {{ plant[2] }}
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            {{ plant[3] }}
+        </p>
+
+        <p>
+            <strong>Habitat:</strong>
+            {{ plant[4] }}
+        </p>
+
+        <p>
+            <strong>Altitude:</strong>
+            {{ plant[5] }}
+        </p>
+
+        <p>
+            <strong>Uses:</strong>
+            {{ plant[6] }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="card">
+
+        <h2>🦠 Possible Diseases</h2>
+
+        {% if diseases %}
+
+            {% for disease in diseases %}
+
+            <div class="disease">
+
+                <h3>{{ disease[0] }}</h3>
+
+                <p>
+                    <strong>Type:</strong>
+                    {{ disease[1] }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    {{ disease[2] }}
+                </p>
+
+                <p>
+                    <strong>Symptoms:</strong>
+                    {{ disease[3] }}
+                </p>
+
+                <p>
+                    <strong>Treatment:</strong>
+                    {{ disease[4] }}
+                </p>
+
+                <p>
+                    <strong>Prevention:</strong>
+                    {{ disease[5] }}
+                </p>
+
+                <p class="severity">
+                    Severity: {{ disease[6] }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No disease information is currently available
+                for this plant.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <div style="text-align: center;">
+
+        <a href="/" class="back-button">
+            Upload Another Image
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

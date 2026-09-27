@@ -1,0 +1,19 @@
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# Uploaded images
+uploads/
+
+# MySQL / environment secrets
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
