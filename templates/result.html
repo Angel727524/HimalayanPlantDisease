@@ -1,223 +1,239 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Analysis Results | Himalayan Flora</title>
 
-    <title>Prediction Result</title>
+<style>
+* { box-sizing: border-box; }
 
-    <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f2;
+    color: #24382b;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f8f4;
-            margin: 0;
-            padding: 0;
-        }
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 235px;
+    background: #173f2b;
+    color: white;
+    padding: 28px 18px;
+}
 
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 40px auto;
-        }
+.logo { font-size: 21px; font-weight: bold; margin-bottom: 40px; }
 
-        .card {
-            background: white;
-            padding: 30px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
+.nav {
+    display: block;
+    padding: 14px;
+    color: #e4eee5;
+    text-decoration: none;
+    border-radius: 8px;
+    margin: 8px 0;
+}
 
-        h1 {
-            color: #2d5a3d;
-            text-align: center;
-        }
+.nav:hover, .nav.active { background: #2f6847; }
 
-        h2 {
-            color: #2d5a3d;
-        }
+main { margin-left: 235px; padding: 32px; }
 
-        h3 {
-            color: #444;
-        }
+header { margin-bottom: 25px; }
+h1 { margin-bottom: 8px; font-size: 28px; }
+h2 { color: #245c3a; margin-top: 0; }
+p { color: #59695d; line-height: 1.7; overflow-wrap: anywhere; }
 
-        .prediction {
-            text-align: center;
-        }
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px #173f2b0b;
+}
 
-        .plant-name {
-            font-size: 32px;
-            font-weight: bold;
-            color: #2d5a3d;
-        }
+.prediction {
+    background: #e5f0e5;
+    border-left: 5px solid #39764a;
+}
 
-        .confidence {
-            font-size: 18px;
-            color: #555;
-        }
+.plant-name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #245c3a;
+    margin: 14px 0;
+    overflow-wrap: anywhere;
+}
 
-        .disease {
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            margin-top: 20px;
-        }
+.confidence {
+    display: inline-block;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #245c3a;
+    font-weight: bold;
+}
 
-        .severity {
-            font-weight: bold;
-        }
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
 
-        .back-button {
-            display: inline-block;
-            background-color: #2d5a3d;
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
+.info-item {
+    background: #f6f8f4;
+    padding: 14px;
+    border-radius: 9px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
 
-        .back-button:hover {
-            background-color: #21452e;
-        }
+.label {
+    display: block;
+    color: #718073;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
 
-    </style>
+.disease {
+    border: 1px solid #e1e9df;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 16px;
+}
 
+.disease h3 { color: #245c3a; margin-top: 0; }
+
+.severity {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #f7edda;
+    color: #815a1d;
+    font-weight: bold;
+}
+
+.button {
+    display: inline-block;
+    background: #28623e;
+    color: white;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.button:hover { background: #173f2b; }
+
+footer { color: #718073; font-size: 13px; text-align: center; padding: 20px; }
+
+@media (max-width: 800px) {
+    .sidebar { position: static; width: 100%; padding: 15px; }
+    .logo { margin-bottom: 12px; }
+    .nav { display: inline-block; margin: 3px; padding: 9px; }
+    main { margin-left: 0; padding: 18px; }
+    .info-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<aside class="sidebar">
+    <div class="logo">🌿 Himalayan Flora</div>
+    <a class="nav" href="/">▦ Dashboard</a>
+    <a class="nav" href="/#plants">🌱 Plant Library</a>
+    <a class="nav active" href="#prediction">🔬 Analysis Results</a>
+    <a class="nav" href="#diseases">🩺 Disease Guide</a>
+</aside>
 
-    <div class="card prediction">
+<main>
+    <header>
+        <h1>Plant Analysis Results</h1>
+        <p>AI-powered Himalayan plant identification and disease information.</p>
+    </header>
 
-        <h1>🌿 AI Prediction</h1>
-
-        <div class="plant-name">
-            {{ predicted_plant }}
-        </div>
-
-        <p class="confidence">
+    <section class="card prediction" id="prediction">
+        <h2>🌿 AI Plant Prediction</h2>
+        <div class="plant-name">{{ predicted_plant|replace("_", " ") }}</div>
+        <p>The model identified the uploaded image as this plant.</p>
+        <div class="confidence">
             AI Confidence: {{ "%.2f"|format(confidence) }}%
+        </div>
+        <p style="font-size:13px">
+            Predictions are estimates and should be verified if needed.
         </p>
-
-    </div>
-
+    </section>
 
     {% if plant %}
-
-    <div class="card">
-
+    <section class="card">
         <h2>🌱 Plant Information</h2>
-
-        <p>
-            <strong>Plant Name:</strong>
-            {{ plant[0] }}
-        </p>
-
-        <p>
-            <strong>Scientific Name:</strong>
-            {{ plant[1] }}
-        </p>
-
-        <p>
-            <strong>Local Name:</strong>
-            {{ plant[2] }}
-        </p>
-
-        <p>
-            <strong>Description:</strong>
-            {{ plant[3] }}
-        </p>
-
-        <p>
-            <strong>Habitat:</strong>
-            {{ plant[4] }}
-        </p>
-
-        <p>
-            <strong>Altitude:</strong>
-            {{ plant[5] }}
-        </p>
-
-        <p>
-            <strong>Uses:</strong>
-            {{ plant[6] }}
-        </p>
-
-    </div>
-
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="label">Plant Name</span>
+                {{ plant[0] or "Not available" }}
+            </div>
+            <div class="info-item">
+                <span class="label">Scientific Name</span>
+                {{ plant[1] or "Not available" }}
+            </div>
+            <div class="info-item">
+                <span class="label">Local Name</span>
+                {{ plant[2] or "Not available" }}
+            </div>
+            <div class="info-item">
+                <span class="label">Habitat</span>
+                {{ plant[4] or "Not available" }}
+            </div>
+            <div class="info-item">
+                <span class="label">Altitude Range</span>
+                {{ plant[5] or "Not available" }}
+            </div>
+            <div class="info-item">
+                <span class="label">Uses</span>
+                {{ plant[6] or "Not available" }}
+            </div>
+        </div>
+        <h3>Description</h3>
+        <p>{{ plant[3] or "No description available." }}</p>
+    </section>
+    {% else %}
+    <section class="card">
+        <h2>Plant Information</h2>
+        <p>No matching plant information was found in the database.</p>
+    </section>
     {% endif %}
 
-
-    <div class="card">
-
-        <h2>🦠 Possible Diseases</h2>
+    <section class="card" id="diseases">
+        <h2>🦠 Disease Information & Recommendations</h2>
 
         {% if diseases %}
-
             {% for disease in diseases %}
-
-            <div class="disease">
-
-                <h3>{{ disease[0] }}</h3>
-
-                <p>
-                    <strong>Type:</strong>
-                    {{ disease[1] }}
-                </p>
-
-                <p>
-                    <strong>Description:</strong>
-                    {{ disease[2] }}
-                </p>
-
-                <p>
-                    <strong>Symptoms:</strong>
-                    {{ disease[3] }}
-                </p>
-
-                <p>
-                    <strong>Treatment:</strong>
-                    {{ disease[4] }}
-                </p>
-
-                <p>
-                    <strong>Prevention:</strong>
-                    {{ disease[5] }}
-                </p>
-
-                <p class="severity">
-                    Severity: {{ disease[6] }}
-                </p>
-
-            </div>
-
+            <article class="disease">
+                <h3>{{ disease[0] or "Disease" }}</h3>
+                <p><strong>Type:</strong> {{ disease[1] or "Not available" }}</p>
+                <p><strong>Description:</strong> {{ disease[2] or "Not available" }}</p>
+                <p><strong>Symptoms:</strong> {{ disease[3] or "Not available" }}</p>
+                <p><strong>Treatment:</strong> {{ disease[4] or "Not available" }}</p>
+                <p><strong>Prevention:</strong> {{ disease[5] or "Not available" }}</p>
+                <div class="severity">
+                    Severity: {{ disease[6] or "Not specified" }}
+                </div>
+            </article>
             {% endfor %}
-
         {% else %}
-
-            <p>
-                No disease information is currently available
-                for this plant.
-            </p>
-
+            <p>No disease information is currently available for this plant. This does not confirm that the plant is disease-free.</p>
         {% endif %}
+    </section>
 
+    <div style="text-align:center">
+        <a class="button" href="/">← Back to Dashboard</a>
     </div>
 
-
-    <div style="text-align: center;">
-
-        <a href="/" class="back-button">
-            Upload Another Image
-        </a>
-
-    </div>
-
-</div>
+    <footer>Himalayan Plant Disease Identification & Treatment Recommendation System</footer>
+</main>
 
 </body>
-
 </html>
