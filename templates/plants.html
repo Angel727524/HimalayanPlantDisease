@@ -1,0 +1,625 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Himalayan Plant Library</title>
+
+    <style>
+        :root {
+            --forest: #173d2c;
+            --forest-light: #28573f;
+            --cream: #f8f7f0;
+            --white: #ffffff;
+            --muted: #6e786f;
+            --border: #e3e7de;
+            --gold: #b58b50;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: #26382d;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 7%;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            color: var(--forest);
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover,
+        .details-link:hover {
+            color: var(--gold);
+        }
+
+        .hero {
+            padding: 65px 7% 55px;
+            color: white;
+            background:
+                radial-gradient(ellipse at 85% 10%, #50795b 0%, transparent 38%),
+                linear-gradient(120deg, #153a29, #294f38);
+        }
+
+        .eyebrow {
+            margin: 0 0 16px;
+            color: #d9c49c;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(38px, 5vw, 62px);
+            font-weight: 500;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .hero > p:not(.eyebrow) {
+            max-width: 650px;
+            margin: 20px 0 0;
+            color: #e0e8df;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .hero-count {
+            display: inline-flex;
+            margin-top: 26px;
+            padding: 10px 15px;
+            border: 1px solid #73917a;
+            border-radius: 30px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin: 38px 0 26px;
+        }
+
+        .toolbar h2 {
+            margin: 0;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .toolbar p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .search {
+            width: min(100%, 390px);
+            padding: 14px 17px;
+            border: 1px solid #d8dfd5;
+            border-radius: 12px;
+            outline: none;
+            background: white;
+            font-size: 14px;
+        }
+
+        .search:focus {
+            border-color: var(--forest-light);
+            box-shadow: 0 0 0 3px #28573f16;
+        }
+
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+            padding-bottom: 65px;
+        }
+
+        .plant-card {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px #193a2812;
+        }
+
+        .plant-image {
+            display: flex;
+            height: 235px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #e8eee5;
+        }
+
+        .plant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder {
+            padding: 20px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .plant-content {
+            padding: 22px;
+        }
+
+        .plant-number {
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .plant-content h3 {
+            margin: 10px 0 6px;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 25px;
+            font-weight: 500;
+        }
+
+        .scientific {
+            min-height: 38px;
+            margin: 0 0 14px;
+            color: var(--muted);
+            font-size: 13px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .local-name {
+            margin-bottom: 13px;
+            color: #405b45;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .description {
+            display: -webkit-box;
+            overflow: hidden;
+            margin: 0;
+            color: #5c685f;
+            font-size: 14px;
+            line-height: 1.75;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+
+        .plant-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .meta-pill {
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: #eef3eb;
+            color: #35553d;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .details-link {
+            display: inline-flex;
+            margin-top: 20px;
+            color: var(--forest);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .detail-card {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+            gap: 36px;
+            margin: 40px 0 70px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: white;
+        }
+
+        .detail-image {
+            min-height: 360px;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #e8eee5;
+        }
+
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 360px;
+            object-fit: cover;
+        }
+
+        .detail-info h2 {
+            margin: 12px 0;
+            color: var(--forest);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 38px;
+            font-weight: 500;
+        }
+
+        .detail-info .scientific {
+            min-height: auto;
+        }
+
+        .info-section {
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .info-section h3 {
+            margin: 0 0 8px;
+            color: var(--forest);
+            font-size: 14px;
+        }
+
+        .info-section p {
+            margin: 0;
+            color: #5c685f;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: var(--forest);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .empty {
+            display: none;
+            padding: 40px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        footer {
+            padding: 32px 7%;
+            background: #153a29;
+            color: #e0e8df;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        @media (max-width: 1000px) {
+            .plant-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .detail-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .plant-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plant-image {
+                height: 250px;
+            }
+
+            .detail-card {
+                padding: 16px;
+            }
+
+            .detail-info h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        Himalayan Plant Disease
+        <span>AI Identification &amp; Research</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/plants">Plant Library</a>
+        <a href="/#detection">AI Detection</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <p class="eyebrow">Discover Himalayan Biodiversity</p>
+
+    <h1>Explore the plants of the Himalayas.</h1>
+
+    <p>
+        Discover medicinal herbs, native trees, shrubs, and other important
+        Himalayan organisms. Explore scientific names, local names, habitats,
+        altitude ranges, and traditional uses from our plant database.
+    </p>
+
+    <div class="hero-count">
+        {{ plants|length }} species displayed
+    </div>
+</section>
+
+<main class="container">
+
+    {% if detail_mode|default(false) %}
+
+        {% for plant in plants %}
+        <article class="detail-card">
+
+            <div class="detail-image">
+                {% if plant.image_url %}
+                    <img src="{{ plant.image_url }}"
+                         alt="{{ plant.plant_name }}">
+                {% else %}
+                    <div class="image-placeholder">
+                        Image unavailable for {{ plant.plant_name }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="detail-info">
+                <span class="plant-number">Himalayan Species</span>
+
+                <h2>{{ plant.plant_name }}</h2>
+
+                <p class="scientific">
+                    {{ plant.scientific_name or 'Scientific name unavailable' }}
+                </p>
+
+                <div class="info-section">
+                    <h3>Local Name</h3>
+                    <p>{{ plant.local_name or 'Not provided' }}</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>About This Species</h3>
+                    <p>{{ plant.description or 'No description available.' }}</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Habitat</h3>
+                    <p>{{ plant.habitat or 'Not provided' }}</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Altitude Range</h3>
+                    <p>{{ plant.altitude_range or 'Not provided' }}</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Uses and Importance</h3>
+                    <p>{{ plant.uses or 'Not provided' }}</p>
+                </div>
+
+                <a href="/plants" class="back-link">
+                    ← Back to all plants
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+
+    {% else %}
+
+        <section class="toolbar">
+            <div>
+                <h2>The Plant Collection</h2>
+                <p>Explore the species recorded in our database.</p>
+            </div>
+
+            <input
+                type="search"
+                id="plantSearch"
+                class="search"
+                placeholder="Search by plant or scientific name..."
+                aria-label="Search plants">
+        </section>
+
+        <section class="plant-grid" id="plantGrid">
+
+            {% for plant in plants %}
+            <article
+                class="plant-card"
+                data-search="{{ plant.plant_name }} {{ plant.scientific_name }} {{ plant.local_name }} {{ plant.description }}">
+
+                <div class="plant-image">
+                    {% if plant.image_url %}
+                        <img
+                            src="{{ plant.image_url }}"
+                            alt="{{ plant.plant_name }}"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+                        <div class="image-placeholder" style="display:none;">
+                            Image unavailable for {{ plant.plant_name }}
+                        </div>
+                    {% else %}
+                        <div class="image-placeholder">
+                            Image unavailable for {{ plant.plant_name }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="plant-content">
+                    <div class="plant-number">
+                        Species {{ plant.plant_id }}
+                    </div>
+
+                    <h3>{{ plant.plant_name }}</h3>
+
+                    <p class="scientific">
+                        {{ plant.scientific_name or 'Scientific name unavailable' }}
+                    </p>
+
+                    <div class="local-name">
+                        {{ plant.local_name or 'Local name not provided' }}
+                    </div>
+
+                    <p class="description">
+                        {{ plant.description or 'No description available.' }}
+                    </p>
+
+                    <div class="plant-meta">
+                        {% if plant.altitude_range %}
+                            <span class="meta-pill">
+                                {{ plant.altitude_range }}
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <a href="/plants/{{ plant.plant_id }}"
+                       class="details-link">
+                        Explore plant details →
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+
+        </section>
+
+        <div class="empty" id="emptyMessage">
+            No plants match your search. Try another name.
+        </div>
+
+    {% endif %}
+
+</main>
+
+<footer>
+    <strong>Himalayan Plant Disease Identification System</strong>
+    <br>
+    AI-powered plant identification and Himalayan biodiversity information.
+</footer>
+
+<script>
+    const searchInput = document.getElementById("plantSearch");
+    const cards = document.querySelectorAll(".plant-card");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const searchText = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            cards.forEach(function (card) {
+                const searchableText =
+                    (card.dataset.search || "").toLowerCase();
+
+                const matches = searchableText.includes(searchText);
+
+                card.style.display = matches ? "" : "none";
+
+                if (matches) {
+                    visibleCount++;
+                }
+            });
+
+            if (emptyMessage) {
+                emptyMessage.style.display =
+                    visibleCount === 0 ? "block" : "none";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
