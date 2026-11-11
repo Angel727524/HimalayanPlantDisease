@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}About FLORA{% endblock %}
+{% block content %}
+<section class="page-hero"><span class="eyebrow">ABOUT THE PROJECT</span><h1>Technology in service<br>of <em>nature.</em></h1><p>FLORA is an academic project exploring how image classification and digital botanical information can support discovery of selected Himalayan plants.</p></section>
+<section class="section about-section"><span class="eyebrow">SYSTEM TECHNOLOGY</span><h2>Four connected layers.</h2><div class="technology-list">{% for n,name,desc in [('01','Python & Flask','Backend application and request handling'),('02','TensorFlow & Keras','Image classification models'),('03','MySQL','Plant and disease information storage'),('04','HTML, CSS & JavaScript','Responsive user interface')] %}<div><span>{{ n }}</span><strong>{{ name }}</strong><small>{{ desc }}</small></div>{% endfor %}</div><p class="disclaimer">FLORA provides preliminary model predictions for educational and research purposes. It is not a substitute for expert botanical identification or plant-pathology diagnosis.</p></section>
+{% endblock %}

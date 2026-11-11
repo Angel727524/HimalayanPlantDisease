@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Analysis Error | FLORA{% endblock %}
+{% block content %}<section class="section empty-state"><span class="eyebrow">SOMETHING WENT WRONG</span><h1>Analysis could not be completed.</h1><p>{{ error_message or 'Please check the server terminal for the technical error and try again.' }}</p><a class="button button-gold" href="{{ url_for('index') }}#upload">Return to FLORA</a></section>{% endblock %}

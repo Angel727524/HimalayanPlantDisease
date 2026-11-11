@@ -1,222 +1,1004 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Himalayan Plant Disease Dashboard</title>
+{% extends "base.html" %}
+
+{% block title %}FLORA | Himalayan Plant Intelligence{% endblock %}
+
+{% block content %}
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f7f2;
-    color: #24382b;
+:root {
+    --flora-bg: #0c1b13;
+    --flora-card: #142b20;
+    --flora-gold: #d5b66e;
+    --flora-ivory: #eeeadd;
+    --flora-muted: #aaa99d;
 }
 
-.sidebar {
-    width: 235px;
-    background: #173f2b;
-    color: white;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    padding: 28px 18px;
+.flora-home {
+    background: var(--flora-bg);
+    color: var(--flora-ivory);
+    overflow: hidden;
 }
 
-.logo { font-size: 21px; font-weight: bold; margin-bottom: 40px; }
-
-.nav {
-    display: block;
-    padding: 14px;
-    color: #e4eee5;
-    text-decoration: none;
-    border-radius: 8px;
-    margin: 8px 0;
+.flora-home .container {
+    width: min(1180px, 90%);
+    margin: auto;
 }
 
-.nav.active, .nav:hover { background: #2f6847; }
-
-main { margin-left: 235px; padding: 32px; }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 28px;
+.flora-home .eyebrow {
+    color: var(--flora-gold);
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    font-weight: 700;
 }
 
-h1 { margin: 0 0 8px; font-size: 28px; }
-p { color: #68766b; line-height: 1.6; }
-
-.tag {
-    background: #e0eee1;
-    color: #28603c;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 13px;
+.flora-home h1,
+.flora-home h2,
+.flora-home h3,
+.flora-home p {
+    margin-top: 0;
 }
 
-.cards {
+.flora-home h1 em,
+.flora-home h2 em {
+    color: var(--flora-gold);
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+
+/* HERO */
+
+.flora-hero {
+    min-height: 570px;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: 55px;
+    padding: 65px 0;
+}
+
+.hero-copy h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(43px, 6vw, 72px);
+    line-height: 1.12;
+    font-weight: 400;
     margin: 25px 0;
 }
 
-.card {
-    background: white;
-    border-radius: 14px;
-    padding: 22px;
-    box-shadow: 0 3px 12px #173f2b0b;
-}
-
-.card .number { font-size: 30px; font-weight: bold; color: #245c3a; }
-.card .label { color: #718073; margin-top: 8px; font-size: 14px; }
-
-.section-title { margin: 30px 0 16px; font-size: 21px; }
-
-.actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-}
-
-.action { border: 1px solid #e5ebe3; }
-.action h3 { margin-top: 0; }
-
-button {
-    background: #28623e;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 18px;
-    cursor: pointer;
+.hero-lead {
+    color: #c2c4b8;
+    line-height: 1.9;
+    max-width: 520px;
     font-size: 15px;
 }
 
-button:hover { background: #173f2b; }
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 25px;
+    margin-top: 32px;
+}
 
-input[type="file"] { max-width: 100%; margin: 12px 0; }
+.flora-button {
+    display: inline-block;
+    padding: 15px 23px;
+    background: var(--flora-gold);
+    color: #17251a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 4px;
+    border: 1px solid var(--flora-gold);
+    transition: .25s;
+    cursor: pointer;
+}
 
-.plants {
+.flora-button:hover {
+    background: transparent;
+    color: var(--flora-gold);
+}
+
+.hero-library-link {
+    color: var(--flora-ivory);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.hero-library-link span {
+    color: var(--flora-gold);
+    margin-left: 7px;
+}
+
+.hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 65px;
+    padding-top: 17px;
+    border-top: 1px solid rgba(255,255,255,.15);
+    color: #92978b;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.hero-art {
+    position: relative;
+    padding: 15px 15px 50px;
+}
+
+.hero-image {
+    height: 440px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #203b2b;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-note {
+    position: absolute;
+    bottom: 5px;
+    left: -20px;
+    background: #142b20;
+    border: 1px solid rgba(213,182,110,.35);
+    padding: 19px 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.3);
+}
+
+.image-note span {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--flora-gold);
+}
+
+.image-note strong {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+/* INTRO */
+
+.intro-band {
+    background: #172c20;
+    padding: 38px 5%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: 180px 1fr 110px;
+    align-items: center;
+    gap: 25px;
+    border-top: 1px solid rgba(213,182,110,.18);
+    border-bottom: 1px solid rgba(213,182,110,.18);
 }
 
-.plant {
-    background: white;
-    border-radius: 12px;
-    padding: 18px;
-    border: 1px solid #e5ebe3;
+.intro-band p {
+    font-family: Georgia, serif;
+    font-size: clamp(18px, 2.3vw, 25px);
+    line-height: 1.6;
+    margin: 0;
 }
 
-.plant span { font-size: 27px; }
+.intro-band em {
+    color: var(--flora-gold);
+}
 
-footer { margin-top: 35px; color: #718073; font-size: 13px; }
+.intro-index {
+    color: #a7a797;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
 
-@media (max-width: 800px) {
-    .sidebar { width: 100%; position: static; padding: 15px; }
-    .logo { margin-bottom: 12px; }
-    .nav { display: inline-block; margin: 3px; padding: 9px; }
-    main { margin-left: 0; padding: 20px; }
-    .cards, .plants { grid-template-columns: 1fr; }
-    .actions { grid-template-columns: 1fr; }
+/* FEATURES */
+
+.flora-section {
+    padding: 90px 0;
+}
+
+.section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+    margin-bottom: 38px;
+}
+
+.section-top h2,
+.analysis-copy h2,
+.library-callout h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.2;
+    font-weight: 400;
+    margin: 15px 0;
+}
+
+.section-top > p {
+    max-width: 340px;
+    color: var(--flora-muted);
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.feature {
+    position: relative;
+    display: block;
+    min-height: 235px;
+    padding: 28px;
+    background: var(--flora-card);
+    border: 1px solid rgba(213,182,110,.2);
+    color: var(--flora-ivory);
+    text-decoration: none;
+    transition: .25s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    border-color: var(--flora-gold);
+}
+
+.feature-no {
+    color: var(--flora-gold);
+    font-size: 11px;
+}
+
+.feature-symbol {
+    float: right;
+    color: var(--flora-gold);
+    font-size: 23px;
+}
+
+.feature h3 {
+    margin-top: 35px;
+    font-family: Georgia, serif;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.feature p {
+    color: #aeb3a8;
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.feature-link {
+    color: var(--flora-gold);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+/* ANALYSIS */
+
+.analysis-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #172c20;
+    margin: 0 5%;
+}
+
+.analysis-photo {
+    min-height: 570px;
+    position: relative;
+    overflow: hidden;
+    background: #203b2b;
+}
+
+.analysis-photo img {
+    width: 100%;
+    height: 100%;
+    min-height: 570px;
+    object-fit: cover;
+    display: block;
+}
+
+.analysis-photo-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(12,27,19,.9);
+    color: var(--flora-gold);
+    padding: 12px 15px;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.analysis-copy {
+    padding: 55px clamp(25px, 5vw, 65px);
+}
+
+.analysis-copy > p {
+    color: #b7baaf;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.upload-form {
+    margin-top: 28px;
+}
+
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    text-align: center;
+    padding: 30px 15px;
+    border: 1px dashed rgba(213,182,110,.65);
+    background: rgba(255,255,255,.025);
+    cursor: pointer;
+}
+
+.dropzone:hover {
+    background: rgba(213,182,110,.07);
+}
+
+.upload-icon {
+    color: var(--flora-gold);
+    font-size: 30px;
+}
+
+.dropzone strong {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.dropzone small {
+    color: var(--flora-muted);
+    font-size: 11px;
+}
+
+.browse {
+    color: var(--flora-gold);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin-top: 5px;
+}
+
+#plant-file {
+    display: none;
+}
+
+.file-name {
+    color: var(--flora-gold);
+    font-size: 12px;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.image-preview {
+    display: none;
+    margin: 15px auto;
+    max-width: 230px;
+    max-height: 190px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+.button-full {
+    width: 100%;
+    margin-top: 10px;
+    font-family: inherit;
+}
+
+.disclaimer {
+    color: #92998e !important;
+    font-size: 10px !important;
+    margin-top: 18px;
+}
+
+/* PLANT COLLECTION */
+
+.plant-preview-section {
+    padding: 90px 0;
+}
+
+.plant-preview-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.plant-preview-heading h2 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 40px;
+    margin: 13px 0 0;
+}
+
+.view-all {
+    color: var(--flora-gold);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.home-plant-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.home-plant-card {
+    background: var(--flora-card);
+    border: 1px solid rgba(213,182,110,.2);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--flora-ivory);
+    transition: .25s;
+}
+
+.home-plant-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--flora-gold);
+}
+
+.home-plant-card img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.home-plant-info {
+    padding: 17px;
+}
+
+.home-plant-info h3 {
+    color: #e3c77f;
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 7px;
+}
+
+.home-plant-info p {
+    color: var(--flora-muted);
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+.plant-image-placeholder {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--flora-gold);
+    font-size: 35px;
+    background: #203b2b;
+}
+
+/* LIBRARY CALLOUT */
+
+.library-callout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #172c20;
+    margin: 0 5% 80px;
+}
+
+.library-callout-copy {
+    padding: 55px;
+}
+
+.library-callout-copy p {
+    color: #b7baaf;
+    line-height: 1.9;
+    font-size: 13px;
+    max-width: 430px;
+}
+
+.library-callout-image {
+    min-height: 350px;
+    overflow: hidden;
+}
+
+.library-callout-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.button-outline {
+    display: inline-block;
+    margin-top: 15px;
+    background: transparent;
+    color: var(--flora-gold);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .flora-hero {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-plant-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .intro-band {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+}
+
+@media(max-width: 650px) {
+    .flora-hero {
+        grid-template-columns: 1fr;
+        padding: 50px 0;
+    }
+
+    .hero-image {
+        height: 330px;
+    }
+
+    .image-note {
+        left: 0;
+    }
+
+    .section-top,
+    .plant-preview-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .analysis-section,
+    .library-callout {
+        grid-template-columns: 1fr;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .analysis-photo,
+    .analysis-photo img {
+        min-height: 300px;
+        height: 300px;
+    }
+
+    .analysis-copy,
+    .library-callout-copy {
+        padding: 35px 6%;
+    }
+
+    .library-callout-image,
+    .library-callout-image img {
+        min-height: 260px;
+        height: 260px;
+    }
+
+    .home-plant-grid {
+        gap: 12px;
+    }
+
+    .home-plant-card img,
+    .plant-image-placeholder {
+        height: 145px;
+    }
+
+    .home-plant-info {
+        padding: 12px;
+    }
+
+    .home-plant-info h3 {
+        font-size: 15px;
+    }
+
+    .hero-meta {
+        margin-top: 35px;
+    }
 }
 </style>
-</head>
 
-<body>
+<div class="flora-home">
 
-<aside class="sidebar">
-    <div class="logo">🌿 Himalayan Flora</div>
-    <a class="nav active" href="/">▦ Dashboard</a>
-    <a class="nav" href="#plants">🌱 Plant Library</a>
-    <a class="nav" href="#detection">🔬 Disease Detection</a>
-    <a class="nav" href="#treatment">🩺 Treatment Guide</a>
-    <a class="nav" href="#about">ℹ About Project</a>
-</aside>
+    <!-- HERO SECTION -->
 
-<main>
-    <header>
-        <div>
-            <h1>Himalayan Plant Dashboard</h1>
-            <p>AI-powered plant disease identification and treatment recommendations.</p>
+    <section class="container flora-hero">
+
+        <div class="hero-copy">
+
+            <div class="eyebrow">
+                HIMALAYAN BOTANICAL INTELLIGENCE
+            </div>
+
+            <h1>
+                Where nature<br>
+                meets <em>knowledge.</em>
+            </h1>
+
+            <p class="hero-lead">
+                Explore Himalayan plant species, identify supported plants
+                and examine leaf health with an AI-assisted botanical platform.
+            </p>
+
+            <div class="hero-actions">
+
+                <a class="flora-button" href="#upload">
+                    Start an analysis ↗
+                </a>
+
+                <a class="hero-library-link" href="{{ url_for('plants') }}">
+                    Explore the library <span>→</span>
+                </a>
+
+            </div>
+
+            <div class="hero-meta">
+                <span>01 / FLORA DIGITAL HERBARIUM</span>
+                <span>BUILT FOR HIMALAYAN BIODIVERSITY</span>
+            </div>
+
         </div>
-        <span class="tag">🌱 Protect Himalayan Flora</span>
-    </header>
 
-    <div class="cards">
-        <div class="card">
-            <div>🌿 Supported Plants</div>
-            <div class="number">15</div>
-            <div class="label">Himalayan plant species</div>
-        </div>
-        <div class="card">
-            <div>🦠 Disease Categories</div>
-            <div class="number">7</div>
-            <div class="label">Disease types in the project</div>
-        </div>
-        <div class="card">
-            <div>🤖 AI System</div>
-            <div class="number">Ready</div>
-            <div class="label">Image-based prediction</div>
-        </div>
-    </div>
+        <div class="hero-art">
 
-    <h2 class="section-title">Quick Actions</h2>
+            <div class="hero-image">
+                <img
+                    src="{{ url_for('static', filename='images/flora-hero.png') }}"
+                    alt="Himalayan mountains and pink rhododendrons"
+                >
+            </div>
 
-    <div class="actions">
-        <div class="card action" id="detection">
-            <h3>🔬 Detect Plant Disease</h3>
-            <p>Upload a plant image to check the model's prediction.</p>
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" name="plant_image"
-                       accept=".jpg,.jpeg,.png" required>
-                <br>
-                <button type="submit">Analyze Plant Image</button>
+            <div class="image-note">
+                <span>BOTANICAL STUDY / 001</span>
+                <strong>Observe. Identify. Understand.</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section class="intro-band">
+
+        <span class="eyebrow">A NEW PERSPECTIVE</span>
+
+        <p>
+            Bringing together <em>botanical knowledge</em>,
+            image recognition and digital discovery to celebrate
+            the plants of the Himalayas.
+        </p>
+
+        <span class="intro-index">FLORA — 2026</span>
+
+    </section>
+
+
+    <!-- PLATFORM FEATURES -->
+
+    <section class="container flora-section">
+
+        <div class="section-top">
+
+            <div>
+                <span class="eyebrow">THE PLATFORM</span>
+
+                <h2>
+                    Discover more.<br>
+                    <em>Understand deeply.</em>
+                </h2>
+            </div>
+
+            <p>
+                Three connected ways to explore the botanical world —
+                from image analysis to plant knowledge.
+            </p>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <a class="feature" href="#upload">
+                <span class="feature-no">01</span>
+                <span class="feature-symbol">↗</span>
+
+                <h3>Plant identification</h3>
+
+                <p>
+                    Upload an image and receive an AI-generated prediction
+                    from the supported Himalayan plant classes.
+                </p>
+
+                <span class="feature-link">IDENTIFY A PLANT →</span>
+            </a>
+
+            <a class="feature" href="#upload">
+                <span class="feature-no">02</span>
+                <span class="feature-symbol">✳</span>
+
+                <h3>Leaf health analysis</h3>
+
+                <p>
+                    Analyze an image for the leaf-health categories
+                    supported by the installed disease model.
+                </p>
+
+                <span class="feature-link">ANALYZE A LEAF →</span>
+            </a>
+
+            <a class="feature" href="{{ url_for('plants') }}">
+                <span class="feature-no">03</span>
+                <span class="feature-symbol">❧</span>
+
+                <h3>Plant library</h3>
+
+                <p>
+                    Browse botanical profiles with scientific names,
+                    local names, habitats and uses.
+                </p>
+
+                <span class="feature-link">EXPLORE THE LIBRARY →</span>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- IMAGE ANALYSIS -->
+
+    <section class="analysis-section" id="upload">
+
+        <div class="analysis-photo">
+
+            <img
+                src="{{ url_for('static', filename='images/flora-lab.png') }}"
+                alt="AI-assisted botanical research laboratory"
+            >
+
+            <span class="analysis-photo-label">
+                FIELD NOTE / AI BOTANICAL RESEARCH
+            </span>
+
+        </div>
+
+        <div class="analysis-copy">
+
+            <span class="eyebrow">AI-ASSISTED IMAGE ANALYSIS</span>
+
+            <h2>
+                Take a closer<br>
+                <em>look at nature.</em>
+            </h2>
+
+            <p>
+                Choose a clear image of a plant leaf or specimen.
+                FLORA will compare it with the classes supported
+                by the installed models.
+            </p>
+
+            <form
+                class="upload-form"
+                action="{{ url_for('upload') }}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <label class="dropzone" for="plant-file">
+
+                    <span class="upload-icon">↑</span>
+
+                    <strong>Choose a plant image</strong>
+
+                    <small>
+                        JPG, JPEG or PNG · Maximum 10 MB
+                    </small>
+
+                    <span class="browse">BROWSE FILES</span>
+
+                </label>
+
+                <input
+                    id="plant-file"
+                    type="file"
+                    name="file"
+                    accept=".jpg,.jpeg,.png"
+                    required
+                >
+
+                <p id="file-name" class="file-name">
+                    No image selected
+                </p>
+
+                <img
+                    id="image-preview"
+                    class="image-preview"
+                    alt="Selected plant image preview"
+                >
+
+                <button
+                    class="flora-button button-full"
+                    type="submit"
+                >
+                    Analyze with FLORA ↗
+                </button>
+
             </form>
+
+            <p class="disclaimer">
+                AI predictions are preliminary and should not replace
+                expert botanical or plant-pathology assessment.
+            </p>
+
         </div>
 
-        <div class="card action" id="treatment">
-            <h3>🩺 Treatment & Prevention</h3>
-            <p>Review the disease information and treatment recommendations shown after your plant image is analyzed.</p>
-            <a href="#plants" style="color:#28623e">Explore plant library ↓</a>
+    </section>
+
+
+    <!-- FEATURED PLANT COLLECTION -->
+
+    <section class="container plant-preview-section">
+
+        <div class="plant-preview-heading">
+
+            <div>
+                <span class="eyebrow">BOTANICAL COLLECTION</span>
+
+                <h2>Discover Himalayan plants.</h2>
+            </div>
+
+            <a class="view-all" href="{{ url_for('plants') }}">
+                VIEW ALL PLANTS →
+            </a>
+
         </div>
-    </div>
 
-    <h2 class="section-title" id="plants">Featured Himalayan Plants</h2>
+        <div class="home-plant-grid">
 
-    <div class="plants">
-        <div class="plant">
-            <span>🌺</span>
-            <h3>Rhododendron</h3>
-            <p>Scientific name: Rhododendron arboreum</p>
+            {% set shown = namespace(count=0) %}
+
+            {% for plant in featured_plants|default([]) %}
+
+                {% if shown.count < 8 %}
+
+                    {% set normalized_name = plant.plant_name|replace(' ', '_') %}
+                    {% set image_filename = plant_images.get(normalized_name) or plant_images.get(plant.plant_name) %}
+
+                    {% if image_filename %}
+
+                    <a
+                        class="home-plant-card"
+                        href="{{ url_for('plant_details', plant_name=plant.plant_name) }}"
+                    >
+
+                        <img
+                            src="{{ url_for('static', filename='plants/' ~ image_filename) }}"
+                            alt="{{ plant.plant_name }}"
+                            loading="lazy"
+                        >
+
+                        <div class="home-plant-info">
+
+                            <h3>{{ plant.plant_name|replace('_', ' ') }}</h3>
+
+                            {% if plant.scientific_name %}
+                                <p>{{ plant.scientific_name }}</p>
+                            {% else %}
+                                <p>Himalayan botanical species</p>
+                            {% endif %}
+
+                        </div>
+
+                    </a>
+
+                    {% endif %}
+
+                    {% set shown.count = shown.count + 1 %}
+
+                {% endif %}
+
+            {% endfor %}
+
         </div>
-        <div class="plant">
-            <span>🌿</span>
-            <h3>Timur</h3>
-            <p>Scientific name: Zanthoxylum armatum</p>
+
+        {% if not featured_plants %}
+            <p style="color:#aaa99d; margin-top:20px;">
+                Explore the Plant Library to discover the botanical collection.
+            </p>
+        {% endif %}
+
+    </section>
+
+
+    <!-- LIBRARY CALLOUT -->
+
+    <section class="library-callout">
+
+        <div class="library-callout-copy">
+
+            <span class="eyebrow">BOTANICAL COLLECTION</span>
+
+            <h2>
+                The Himalayas,<br>
+                one plant at a time.
+            </h2>
+
+            <p>
+                Explore Himalayan species and the information
+                recorded in the FLORA database.
+            </p>
+
+            <a
+                class="flora-button button-outline"
+                href="{{ url_for('plants') }}"
+            >
+                Enter the plant library ↗
+            </a>
+
         </div>
-        <div class="plant">
-            <span>🌲</span>
-            <h3>Blue Pine</h3>
-            <p>Scientific name: Pinus wallichiana</p>
+
+        <div class="library-callout-image">
+
+            <img
+                src="{{ url_for('static', filename='images/flora-library.png') }}"
+                alt="A diverse collection of Himalayan plants and flowers"
+                loading="lazy"
+            >
+
         </div>
-    </div>
 
-    <div class="card" id="about" style="margin-top:25px">
-        <h2>About This Project</h2>
-        <p>This system uses machine learning to identify supported Himalayan plants and predict possible plant diseases from uploaded images. It also presents plant information and disease-related recommendations.</p>
-    </div>
+    </section>
 
-    <footer>Himalayan Plant Disease Identification & Treatment Recommendation System</footer>
-</main>
+</div>
 
-</body>
-</html>
+
+<script>
+const plantFileInput = document.getElementById("plant-file");
+const fileNameDisplay = document.getElementById("file-name");
+const imagePreview = document.getElementById("image-preview");
+
+if (plantFileInput) {
+
+    plantFileInput.addEventListener("change", function() {
+
+        const file = this.files[0];
+
+        if (!file) {
+            fileNameDisplay.textContent = "No image selected";
+            imagePreview.style.display = "none";
+            imagePreview.removeAttribute("src");
+            return;
+        }
+
+        fileNameDisplay.textContent = file.name;
+
+        if (imagePreview.dataset.objectUrl) {
+            URL.revokeObjectURL(imagePreview.dataset.objectUrl);
+        }
+
+        const imageURL = URL.createObjectURL(file);
+
+        imagePreview.src = imageURL;
+        imagePreview.dataset.objectUrl = imageURL;
+        imagePreview.style.display = "block";
+
+    });
+
+}
+</script>
+
+{% endblock %}

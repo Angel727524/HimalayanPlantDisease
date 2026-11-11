@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ plant.plant_name }} | FLORA{% endblock %}
+
+{% block content %}
+
+<section class="detail-page">
+
+    <a href="{{ url_for('plants') }}" class="back-link">
+        ← Back to Plant Library
+    </a>
+
+    <div class="detail-card">
+
+        <div class="detail-image">
+
+            {% if image_filename %}
+                <img
+                    src="{{ url_for('static', filename='plants/' ~ image_filename) }}"
+                    alt="{{ plant.plant_name }}"
+                >
+            {% else %}
+                <div class="image-placeholder">
+                    <span>✳</span>
+                    <p>Plant image unavailable</p>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="detail-info">
+
+            <span class="eyebrow">HIMALAYAN PLANT COLLECTION</span>
+
+            <h1>{{ plant.plant_name }}</h1>
+
+            <p class="scientific-name">
+                {{ plant.scientific_name or "Scientific name unavailable" }}
+            </p>
+
+            <p class="local-name">
+                Local name: {{ plant.local_name or "Not available" }}
+            </p>
+
+            <div class="detail-divider"></div>
+
+            <h2>About this plant</h2>
+            <p>{{ plant.description or "Information is being updated." }}</p>
+
+            <h2>Natural habitat</h2>
+            <p>{{ plant.habitat or "Information is not available." }}</p>
+
+            <h2>Altitude range</h2>
+            <p>{{ plant.altitude_range or "Information is not available." }}</p>
+
+            <h2>Traditional uses</h2>
+            <p>{{ plant.uses or "Information is not available." }}</p>
+
+        </div>
+
+    </div>
+
+    {% if diseases %}
+    <section class="section">
+        <div class="section-heading">
+            <span class="eyebrow">PLANT HEALTH</span>
+            <h2>Known diseases</h2>
+        </div>
+
+        <div class="plant-grid">
+            {% for disease in diseases %}
+            <article class="plant-card">
+                <div class="plant-card-content">
+                    <h2>{{ disease.disease_name }}</h2>
+                    <p>{{ disease.description or "Description unavailable." }}</p>
+
+                    <h3>Symptoms</h3>
+                    <p>{{ disease.symptoms or "Not available." }}</p>
+
+                    <h3>Treatment</h3>
+                    <p>{{ disease.treatment or "Not available." }}</p>
+
+                    <h3>Prevention</h3>
+                    <p>{{ disease.prevention or "Not available." }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <div class="detail-bottom">
+        <p>Discover and protect the botanical heritage of the Himalayas.</p>
+        <a href="{{ url_for('plants') }}" class="gold-button">
+            Explore more plants ↗
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}
