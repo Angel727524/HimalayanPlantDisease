@@ -378,6 +378,13 @@
     overflow-wrap: anywhere;
 }
 
+.upload-error {
+    color: #ff9999;
+    font-size: 13px;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
 .image-preview {
     display: none;
     margin: 15px auto;
@@ -670,7 +677,6 @@
 
     </section>
 
-
     <!-- INTRODUCTION -->
 
     <section class="intro-band">
@@ -686,7 +692,6 @@
         <span class="intro-index">FLORA — 2026</span>
 
     </section>
-
 
     <!-- PLATFORM FEATURES -->
 
@@ -758,7 +763,6 @@
 
     </section>
 
-
     <!-- IMAGE ANALYSIS -->
 
     <section class="analysis-section" id="upload">
@@ -817,12 +821,18 @@
                     type="file"
                     name="file"
                     accept=".jpg,.jpeg,.png"
-                    required
                 >
 
                 <p id="file-name" class="file-name">
                     No image selected
                 </p>
+
+                <p
+                    id="upload-error"
+                    class="upload-error"
+                    role="alert"
+                    aria-live="polite"
+                ></p>
 
                 <img
                     id="image-preview"
@@ -847,7 +857,6 @@
         </div>
 
     </section>
-
 
     <!-- FEATURED PLANT COLLECTION -->
 
@@ -923,7 +932,6 @@
 
     </section>
 
-
     <!-- LIBRARY CALLOUT -->
 
     <section class="library-callout">
@@ -965,17 +973,20 @@
 
 </div>
 
-
 <script>
 const plantFileInput = document.getElementById("plant-file");
 const fileNameDisplay = document.getElementById("file-name");
 const imagePreview = document.getElementById("image-preview");
+const uploadForm = document.querySelector(".upload-form");
+const uploadError = document.getElementById("upload-error");
 
 if (plantFileInput) {
 
     plantFileInput.addEventListener("change", function() {
 
         const file = this.files[0];
+
+        uploadError.textContent = "";
 
         if (!file) {
             fileNameDisplay.textContent = "No image selected";
@@ -995,6 +1006,26 @@ if (plantFileInput) {
         imagePreview.src = imageURL;
         imagePreview.dataset.objectUrl = imageURL;
         imagePreview.style.display = "block";
+
+    });
+
+}
+
+if (uploadForm) {
+
+    uploadForm.addEventListener("submit", function(event) {
+
+        if (!plantFileInput.files.length) {
+
+            event.preventDefault();
+
+            uploadError.textContent =
+                "Please select a plant image before analyzing.";
+
+            return;
+        }
+
+        uploadError.textContent = "";
 
     });
 

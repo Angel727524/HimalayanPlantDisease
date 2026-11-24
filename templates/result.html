@@ -10,7 +10,7 @@
         <div class="result-heading">
             <p class="eyebrow">FLORA AI ANALYSIS</p>
             <h1>Plant Analysis <span>Results</span></h1>
-            <p>Review the identification and disease prediction below.</p>
+            <p>Review the plant identification and disease prediction below.</p>
         </div>
 
         {% if error %}
@@ -23,175 +23,281 @@
 
         {% else %}
 
-            {% if plant_uncertain %}
+        <div class="result-layout">
 
-            <div class="result-error">
-                <h3>Plant identification is uncertain</h3>
-                <p>
-                    FLORA could not confidently identify this plant.
-                    Its closest prediction was
-                    <strong>{{ predicted_plant|replace('_', ' ') }}</strong>
-                    with {{ "%.2f"|format(plant_confidence|float) }}% confidence.
-                </p>
-                <p>
-                    Please try a clearer photograph showing the leaves,
-                    flowers, or other distinctive plant features.
-                </p>
-            </div>
+            <!-- Uploaded Image -->
+            <div class="result-image-panel">
+                <h3>Uploaded Image</h3>
 
-            {% else %}
-
-            <div class="result-layout">
-
-                <div class="result-image-panel">
-                    <h3>Uploaded Image</h3>
-
-                    {% if uploaded_image %}
-                    <img
-                        src="{{ url_for('uploaded_file', filename=uploaded_image) }}"
-                        alt="Uploaded plant image"
-                    >
-                    {% else %}
-                    <div class="image-missing">Image unavailable</div>
-                    {% endif %}
-
-                    <p class="image-caption">
-                        Image submitted for AI identification
-                    </p>
-                </div>
-
-                <div class="result-details">
-
-                    <div class="result-card">
-                        <p class="result-label">IDENTIFIED PLANT</p>
-
-                        {% if plant %}
-                        <h2>{{ plant.plant_name|replace('_', ' ') }}</h2>
-
-                            {% if plant.scientific_name %}
-                            <p class="scientific">
-                                {{ plant.scientific_name }}
-                            </p>
-                            {% endif %}
-
-                        {% else %}
-                        <h2>{{ predicted_plant|default('Unknown')|replace('_', ' ') }}</h2>
-                        {% endif %}
-
-                        {% if plant_confidence is defined %}
-                        <div class="confidence-row">
-                            <span>Plant confidence</span>
-                            <strong>
-                                {{ "%.2f"|format(plant_confidence|float) }}%
-                            </strong>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="result-card disease-card">
-                        <p class="result-label">DISEASE PREDICTION</p>
-
-                        <h2>
-                            {{ predicted_disease|default('Not available')|replace('_', ' ') }}
-                        </h2>
-
-                        {% if disease_confidence is defined and disease_confidence is not none %}
-                        <div class="confidence-row">
-                            <span>Disease confidence</span>
-                            <strong>
-                                {{ "%.2f"|format(disease_confidence|float) }}%
-                            </strong>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                </div>
-            </div>
-
-            {% if plant %}
-            <section class="information-section">
-                <p class="eyebrow">PLANT PROFILE</p>
-                <h2>About this plant</h2>
-
-                {% if plant.description %}
-                <p>{{ plant.description }}</p>
+                {% if uploaded_image %}
+                <img
+                    src="{{ url_for('uploaded_file', filename=uploaded_image) }}"
+                    alt="Uploaded plant image"
+                >
+                {% else %}
+                <div class="image-missing">Image unavailable</div>
                 {% endif %}
 
-                <div class="information-grid">
+                <p class="image-caption">
+                    Image submitted for AI identification
+                </p>
+            </div>
 
-                    {% if plant.local_name %}
-                    <div>
-                        <strong>Local name</strong>
-                        <p>{{ plant.local_name }}</p>
+            <!-- AI Results -->
+            <div class="result-details">
+
+                <!-- Plant Identification -->
+                <div class="result-card">
+
+                    <p class="result-label">PLANT IDENTIFICATION</p>
+
+                    {% if plant_uncertain %}
+
+                    <h2>Identification Uncertain</h2>
+
+                    <p>
+                        FLORA's closest plant prediction was
+                        <strong>
+                            {{ predicted_plant|default('Unknown')|replace('_', ' ') }}
+                        </strong>.
+                    </p>
+
+                    {% if plant_confidence is defined and plant_confidence is not none %}
+                    <div class="confidence-row">
+                        <span>Plant confidence</span>
+                        <strong>
+                            {{ "%.2f"|format(plant_confidence|float) }}%
+                        </strong>
                     </div>
                     {% endif %}
 
-                    {% if plant.habitat %}
-                    <div>
-                        <strong>Habitat</strong>
-                        <p>{{ plant.habitat }}</p>
+                    <p class="result-note">
+                        The plant prediction is below FLORA's
+                        {{ 40 }}% confidence threshold. Please try a clearer
+                        photograph showing distinctive leaves, flowers,
+                        or other plant features.
+                    </p>
+
+                    {% else %}
+
+                    {% if plant %}
+                    <h2>{{ plant.plant_name|replace('_', ' ') }}</h2>
+
+                    {% if plant.scientific_name %}
+                    <p class="scientific">
+                        {{ plant.scientific_name }}
+                    </p>
+                    {% endif %}
+
+                    {% else %}
+                    <h2>
+                        {{ predicted_plant|default('Unknown')|replace('_', ' ') }}
+                    </h2>
+                    <p class="result-note">
+                        A matching plant profile was not found in the database.
+                    </p>
+                    {% endif %}
+
+                    {% if plant_confidence is defined and plant_confidence is not none %}
+                    <div class="confidence-row">
+                        <span>Plant confidence</span>
+                        <strong>
+                            {{ "%.2f"|format(plant_confidence|float) }}%
+                        </strong>
                     </div>
                     {% endif %}
 
-                    {% if plant.altitude_range %}
-                    <div>
-                        <strong>Altitude range</strong>
-                        <p>{{ plant.altitude_range }}</p>
-                    </div>
-                    {% endif %}
-
-                    {% if plant.uses %}
-                    <div>
-                        <strong>Traditional uses</strong>
-                        <p>{{ plant.uses }}</p>
-                    </div>
                     {% endif %}
 
                 </div>
-            </section>
-            {% endif %}
 
-            {% if diseases %}
-            <section class="information-section">
-                <p class="eyebrow">DISEASE REFERENCE</p>
-                <h2>Related disease information</h2>
+                <!-- Disease Prediction -->
+                <div class="result-card disease-card">
 
-                {% for disease in diseases %}
-                <article class="disease-information">
-                    <h3>{{ disease.disease_name|replace('_', ' ') }}</h3>
+                    <p class="result-label">DISEASE PREDICTION</p>
 
-                    {% if disease.severity %}
-                    <p><strong>Severity:</strong> {{ disease.severity }}</p>
+                    <h2>
+                        {{ predicted_disease|default('Not available')|replace('_', ' ') }}
+                    </h2>
+
+                    {% if disease_confidence is defined and disease_confidence is not none %}
+                    <div class="confidence-row">
+                        <span>Disease confidence</span>
+                        <strong>
+                            {{ "%.2f"|format(disease_confidence|float) }}%
+                        </strong>
+                    </div>
                     {% endif %}
 
-                    {% if disease.description %}
-                    <p><strong>Description:</strong> {{ disease.description }}</p>
-                    {% endif %}
+                    <p class="result-note">
+                        This prediction is generated independently by
+                        the disease classification model. It is not a
+                        confirmed diagnosis.
+                    </p>
 
-                    {% if disease.symptoms %}
-                    <p><strong>Symptoms:</strong> {{ disease.symptoms }}</p>
-                    {% endif %}
+                </div>
 
-                    {% if disease.treatment %}
-                    <p><strong>Treatment:</strong> {{ disease.treatment }}</p>
-                    {% endif %}
-
-                    {% if disease.prevention %}
-                    <p><strong>Prevention:</strong> {{ disease.prevention }}</p>
-                    {% endif %}
-                </article>
-                {% endfor %}
-            </section>
-            {% endif %}
-
-            {% endif %}
-
-            <div class="result-disclaimer">
-                <strong>Important:</strong>
-                This is an AI-generated prediction, not a confirmed plant
-                disease diagnosis. Confidence scores do not guarantee accuracy.
-                Check uncertain results with a qualified plant expert.
             </div>
+        </div>
+
+        <!-- Healthy Result -->
+        {% if healthy_prediction %}
+
+        <section class="information-section healthy-section">
+            <p class="eyebrow">HEALTH STATUS</p>
+            <h2>No Disease Detected by the Model</h2>
+            <p>
+                The AI model classified this image as Healthy.
+                Continue monitoring the plant and maintain suitable
+                growing conditions.
+            </p>
+            <p class="result-note">
+                This prediction does not guarantee that the plant is
+                completely free from disease.
+            </p>
+        </section>
+
+        <!-- Disease Information -->
+        {% elif disease_info %}
+
+        <section class="information-section">
+            <p class="eyebrow">DISEASE REFERENCE</p>
+            <h2>Disease Information</h2>
+
+            <article class="disease-information">
+
+                <h3>{{ disease_info.disease_name|replace('_', ' ') }}</h3>
+
+                {% if disease_info.disease_type %}
+                <p>
+                    <strong>Disease type:</strong>
+                    {{ disease_info.disease_type }}
+                </p>
+                {% endif %}
+
+                {% if disease_info.severity %}
+                <p>
+                    <strong>Reference severity:</strong>
+                    {{ disease_info.severity }}
+                </p>
+                {% endif %}
+
+                {% if disease_info.description %}
+                <div class="disease-detail">
+                    <strong>Description</strong>
+                    <p>{{ disease_info.description }}</p>
+                </div>
+                {% endif %}
+
+                {% if disease_info.cause %}
+                <div class="disease-detail">
+                    <strong>Possible causes</strong>
+                    <p>{{ disease_info.cause }}</p>
+                </div>
+                {% endif %}
+
+                {% if disease_info.symptoms %}
+                <div class="disease-detail">
+                    <strong>Symptoms</strong>
+                    <p>{{ disease_info.symptoms }}</p>
+                </div>
+                {% endif %}
+
+                {% if disease_info.treatment %}
+                <div class="disease-detail">
+                    <strong>Treatment recommendations</strong>
+                    <p>{{ disease_info.treatment }}</p>
+                </div>
+                {% endif %}
+
+                {% if disease_info.prevention %}
+                <div class="disease-detail">
+                    <strong>Prevention methods</strong>
+                    <p>{{ disease_info.prevention }}</p>
+                </div>
+                {% endif %}
+
+                {% if disease_info.reference_source %}
+                <div class="disease-detail">
+                    <strong>Reference sources</strong>
+                    <p class="reference-text">
+                        {{ disease_info.reference_source }}
+                    </p>
+                </div>
+                {% endif %}
+
+            </article>
+        </section>
+
+        {% else %}
+
+        <section class="information-section">
+            <p class="eyebrow">DISEASE REFERENCE</p>
+            <h2>Additional information unavailable</h2>
+            <p>
+                The model returned a disease prediction, but a matching
+                disease information record could not be found in the
+                database. Please consult a plant specialist for further
+                assessment.
+            </p>
+        </section>
+
+        {% endif %}
+
+        <!-- Plant Information -->
+        {% if plant and not plant_uncertain %}
+
+        <section class="information-section">
+            <p class="eyebrow">PLANT PROFILE</p>
+            <h2>About this plant</h2>
+
+            {% if plant.description %}
+            <p>{{ plant.description }}</p>
+            {% endif %}
+
+            <div class="information-grid">
+
+                {% if plant.local_name %}
+                <div>
+                    <strong>Local name</strong>
+                    <p>{{ plant.local_name }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.habitat %}
+                <div>
+                    <strong>Habitat</strong>
+                    <p>{{ plant.habitat }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.altitude_range %}
+                <div>
+                    <strong>Altitude range</strong>
+                    <p>{{ plant.altitude_range }}</p>
+                </div>
+                {% endif %}
+
+                {% if plant.uses %}
+                <div>
+                    <strong>Traditional uses</strong>
+                    <p>{{ plant.uses }}</p>
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+
+        {% endif %}
+
+        <div class="result-disclaimer">
+            <strong>Important:</strong>
+            AI predictions are preliminary and are not confirmed plant
+            disease diagnoses. Confidence scores do not guarantee accuracy.
+            Disease reference information is general and may not apply
+            to every plant species. Consult a qualified plant expert
+            before applying treatment.
+        </div>
 
         {% endif %}
 
@@ -306,6 +412,12 @@
     color: #d5b66e;
 }
 
+.result-note {
+    color: #c5c1b5;
+    line-height: 1.7;
+    margin-top: 15px;
+}
+
 .information-section {
     margin-top: 28px;
     line-height: 1.8;
@@ -340,6 +452,23 @@
 
 .disease-information h3 {
     color: #e2c77f;
+}
+
+.disease-detail {
+    margin-top: 20px;
+}
+
+.disease-detail p {
+    margin-top: 5px;
+    white-space: pre-line;
+}
+
+.reference-text {
+    overflow-wrap: anywhere;
+}
+
+.healthy-section h2 {
+    color: #d5b66e;
 }
 
 .result-disclaimer {
@@ -392,4 +521,5 @@
     }
 }
 </style>
+
 {% endblock %}
