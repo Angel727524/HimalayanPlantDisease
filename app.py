@@ -476,7 +476,7 @@ def get_disease_information(disease_name):
 @app.route("/")
 def index():
 
-    featured_plants = get_database_plant_list()
+    featured_plants = []
 
     return render_template(
         "index.html",
