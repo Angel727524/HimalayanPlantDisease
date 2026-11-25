@@ -9,10 +9,7 @@ import os
 import json
 import uuid
 import re
-import numpy as np
-import tensorflow as tf
-
-from database import get_database_connection
+import threading
 
 
 # ==================================================
@@ -47,6 +44,8 @@ DISEASE_LABELS_PATH = os.path.join(
     MODEL_FOLDER, "disease_class_names_candidate.json"
 )
 
+FLORA_DATA_PATH = os.path.join(BASE_DIR, "flora_data.json")
+
 IMAGE_SIZE = (224, 224)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
@@ -58,6 +57,28 @@ app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PLANT_IMAGE_FOLDER, exist_ok=True)
+
+
+# ==================================================
+# LOAD FLORA DATABASE FROM JSON
+# ==================================================
+
+if not os.path.isfile(FLORA_DATA_PATH):
+    raise FileNotFoundError(
+        "flora_data.json was not found in the project folder."
+    )
+
+with open(FLORA_DATA_PATH, "r", encoding="utf-8") as file:
+    FLORA_DATA = json.load(file)
+
+PLANTS_DATA = FLORA_DATA.get("plants", [])
+DISEASES_DATA = FLORA_DATA.get("diseases", [])
+PLANT_DISEASES_DATA = FLORA_DATA.get("plant_diseases", [])
+
+print("FLORA information loaded successfully!")
+print("Plants:", len(PLANTS_DATA))
+print("Diseases:", len(DISEASES_DATA))
+print("Plant-disease relationships:", len(PLANT_DISEASES_DATA))
 
 
 # ==================================================
@@ -95,23 +116,14 @@ PLANT_IMAGES = {
 # ==================================================
 
 def normalize_plant_name(name):
-    return str(name).replace("_", " ").strip()
+    return str(name or "").replace("_", " ").strip()
 
 
 def normalize_disease_name(name):
-    """
-    Normalize model and database disease names.
-
-    Example:
-    'Leaf Spot' and 'Leaf Spot Disease'
-    both become 'leaf spot'.
-    """
-
     value = str(name or "").strip().lower()
     value = value.replace("_", " ")
     value = re.sub(r"\s+", " ", value)
-    value = re.sub(r" disease$", "", value)
-
+    value = re.sub(r"\s+disease$", "", value)
     return value
 
 
@@ -143,132 +155,97 @@ def allowed_file(filename):
     )
 
 
-def prepare_image(image_path):
-
-    image = tf.keras.utils.load_img(
-        image_path,
-        target_size=IMAGE_SIZE,
-        color_mode="rgb"
-    )
-
-    image_array = tf.keras.utils.img_to_array(image)
-
-    image_array = np.expand_dims(
-        image_array,
-        axis=0
-    )
-
-    return image_array
-
-
-# ==================================================
-# DATABASE: GET ALL PLANTS
-# ==================================================
-
 def get_database_plant_list():
 
-    connection = None
-    cursor = None
-
-    try:
-
-        connection = get_database_connection()
-        cursor = connection.cursor(dictionary=True)
-
-        cursor.execute("""
-            SELECT
-                plant_name,
-                scientific_name,
-                local_name,
-                description,
-                habitat,
-                altitude_range,
-                uses
-            FROM plants
-            ORDER BY plant_name
-        """)
-
-        return cursor.fetchall()
-
-    except Exception as error:
-
-        print("Plant list database error:", error)
-        return []
-
-    finally:
-
-        if cursor:
-            cursor.close()
-
-        if connection:
-            connection.close()
-
-
-# ==================================================
-# LOAD PLANT MODEL
-# ==================================================
-
-print("\nLoading plant identification model...")
-
-if not os.path.exists(PLANT_MODEL_PATH):
-    raise FileNotFoundError(
-        f"Plant model not found: {PLANT_MODEL_PATH}"
+    return sorted(
+        PLANTS_DATA,
+        key=lambda plant: plant.get("plant_name", "").lower()
     )
 
-plant_model = tf.keras.models.load_model(
-    PLANT_MODEL_PATH,
-    compile=False
-)
 
-if plant_model.output_shape[-1] != len(PLANT_CLASSES):
-    raise ValueError(
-        "Plant model output does not match plant labels."
-    )
+def get_plant_information(plant_name):
 
-print("Plant model loaded successfully!")
+    wanted_name = normalize_plant_name(plant_name).lower()
+
+    for plant in PLANTS_DATA:
+
+        database_name = normalize_plant_name(
+            plant.get("plant_name")
+        ).lower()
+
+        if database_name == wanted_name:
+            return plant
+
+    return None
+
+
+def get_disease_information(disease_name):
+
+    wanted_name = normalize_disease_name(disease_name)
+
+    for disease in DISEASES_DATA:
+
+        database_name = normalize_disease_name(
+            disease.get("disease_name")
+        )
+
+        if database_name == wanted_name:
+            return disease
+
+    return None
+
+
+def get_plant_diseases(plant_id):
+
+    related_diseases = []
+
+    for relationship in PLANT_DISEASES_DATA:
+
+        if relationship.get("plant_id") == plant_id:
+
+            disease = next(
+                (
+                    item for item in DISEASES_DATA
+                    if item.get("disease_id")
+                    == relationship.get("disease_id")
+                ),
+                None
+            )
+
+            if disease:
+
+                disease_copy = disease.copy()
+                disease_copy["notes"] = relationship.get("notes", "")
+
+                related_diseases.append(disease_copy)
+
+    return related_diseases
 
 
 # ==================================================
-# LOAD DISEASE MODEL
+# LAZY-LOAD AI MODELS
+# Models load only when an image is uploaded.
 # ==================================================
 
-print("\nLoading six-class disease model...")
-
-if not os.path.exists(DISEASE_MODEL_PATH):
-    raise FileNotFoundError(
-        f"Disease model not found: {DISEASE_MODEL_PATH}"
-    )
-
-preprocess = tf.keras.applications.mobilenet_v2.preprocess_input
-
-disease_model = tf.keras.models.load_model(
-    DISEASE_MODEL_PATH,
-    custom_objects={
-        "preprocess_input": preprocess,
-        "function": preprocess
-    },
-    compile=False
-)
-
-print("Disease model loaded successfully!")
-
-
-# ==================================================
-# LOAD DISEASE LABELS
-# ==================================================
+plant_model = None
+disease_model = None
+model_lock = threading.Lock()
 
 with open(
     DISEASE_LABELS_PATH,
     "r",
     encoding="utf-8"
 ) as file:
+
     disease_labels_data = json.load(file)
 
 
 if isinstance(disease_labels_data, list):
+
     DISEASE_CLASSES = disease_labels_data
 
 elif isinstance(disease_labels_data, dict):
+
     DISEASE_CLASSES = (
         disease_labels_data.get("class_names")
         or disease_labels_data.get("classes")
@@ -292,13 +269,96 @@ if DISEASE_CLASSES != EXPECTED_DISEASE_CLASSES:
         f"Unexpected disease label order: {DISEASE_CLASSES}"
     )
 
-if len(DISEASE_CLASSES) != disease_model.output_shape[-1]:
-    raise ValueError(
-        "Disease labels do not match disease model output."
+
+def load_ai_models():
+
+    global plant_model, disease_model
+
+    if plant_model is not None and disease_model is not None:
+        return
+
+    with model_lock:
+
+        if plant_model is not None and disease_model is not None:
+            return
+
+        import tensorflow as tf
+
+        print("\nLoading plant identification model...")
+
+        if not os.path.isfile(PLANT_MODEL_PATH):
+            raise FileNotFoundError(
+                f"Plant model not found: {PLANT_MODEL_PATH}"
+            )
+
+        new_plant_model = tf.keras.models.load_model(
+            PLANT_MODEL_PATH,
+            compile=False
+        )
+
+        if new_plant_model.output_shape[-1] != len(PLANT_CLASSES):
+            raise ValueError(
+                "Plant model output does not match plant labels."
+            )
+
+        print("Plant model loaded successfully!")
+
+        print("\nLoading six-class disease model...")
+
+        if not os.path.isfile(DISEASE_MODEL_PATH):
+            raise FileNotFoundError(
+                f"Disease model not found: {DISEASE_MODEL_PATH}"
+            )
+
+        preprocess = (
+            tf.keras.applications.mobilenet_v2.preprocess_input
+        )
+
+        new_disease_model = tf.keras.models.load_model(
+            DISEASE_MODEL_PATH,
+            custom_objects={
+                "preprocess_input": preprocess,
+                "function": preprocess
+            },
+            compile=False
+        )
+
+        if len(DISEASE_CLASSES) != new_disease_model.output_shape[-1]:
+            raise ValueError(
+                "Disease labels do not match disease model output."
+            )
+
+        plant_model = new_plant_model
+        disease_model = new_disease_model
+
+        print("Disease model loaded successfully!")
+        print("Disease model ready!")
+        print("Disease classes:", DISEASE_CLASSES)
+
+
+# ==================================================
+# PREPARE IMAGE
+# ==================================================
+
+def prepare_image(image_path):
+
+    import numpy as np
+    import tensorflow as tf
+
+    image = tf.keras.utils.load_img(
+        image_path,
+        target_size=IMAGE_SIZE,
+        color_mode="rgb"
     )
 
-print("Disease model ready!")
-print("Disease classes:", DISEASE_CLASSES)
+    image_array = tf.keras.utils.img_to_array(image)
+
+    image_array = np.expand_dims(
+        image_array,
+        axis=0
+    )
+
+    return image_array
 
 
 # ==================================================
@@ -306,6 +366,10 @@ print("Disease classes:", DISEASE_CLASSES)
 # ==================================================
 
 def predict_plant(image_path):
+
+    load_ai_models()
+
+    import numpy as np
 
     image_array = prepare_image(image_path)
 
@@ -335,6 +399,10 @@ def predict_plant(image_path):
 
 def predict_disease(image_path):
 
+    load_ai_models()
+
+    import numpy as np
+
     image_array = prepare_image(image_path)
 
     predictions = disease_model.predict(
@@ -355,128 +423,13 @@ def predict_disease(image_path):
 
 
 # ==================================================
-# GET PLANT INFORMATION FROM MYSQL
-# ==================================================
-
-def get_plant_information(plant_name):
-
-    connection = None
-    cursor = None
-
-    try:
-
-        connection = get_database_connection()
-        cursor = connection.cursor(dictionary=True)
-
-        search_name = normalize_plant_name(plant_name)
-
-        cursor.execute("""
-            SELECT
-                plant_name,
-                scientific_name,
-                local_name,
-                description,
-                habitat,
-                altitude_range,
-                uses
-            FROM plants
-            WHERE LOWER(REPLACE(plant_name, '_', ' ')) = LOWER(%s)
-            LIMIT 1
-        """, (search_name,))
-
-        return cursor.fetchone()
-
-    except Exception as error:
-
-        print("Plant database error:", error)
-        return None
-
-    finally:
-
-        if cursor:
-            cursor.close()
-
-        if connection:
-            connection.close()
-
-
-# ==================================================
-# GET DISEASE INFORMATION BY DISEASE NAME
-# ==================================================
-
-def get_disease_information(disease_name):
-
-    """
-    The diseases table contains general disease reference records.
-    It does not contain a plant_name column.
-
-    Therefore, disease information is matched by disease_name.
-    """
-
-    connection = None
-    cursor = None
-
-    try:
-
-        connection = get_database_connection()
-        cursor = connection.cursor(dictionary=True)
-
-        cursor.execute("""
-            SELECT
-                disease_name,
-                disease_type,
-                description,
-                cause,
-                symptoms,
-                treatment,
-                prevention,
-                severity,
-                reference_source
-            FROM diseases
-        """)
-
-        all_diseases = cursor.fetchall()
-
-        wanted_name = normalize_disease_name(disease_name)
-
-        for disease in all_diseases:
-
-            database_name = normalize_disease_name(
-                disease.get("disease_name")
-            )
-
-            if database_name == wanted_name:
-                return disease
-
-        print(
-            "No matching disease record found for:",
-            disease_name
-        )
-
-        return None
-
-    except Exception as error:
-
-        print("Disease database error:", error)
-        return None
-
-    finally:
-
-        if cursor:
-            cursor.close()
-
-        if connection:
-            connection.close()
-
-
-# ==================================================
 # HOME PAGE
 # ==================================================
 
 @app.route("/")
 def index():
 
-    featured_plants = []
+    featured_plants = get_database_plant_list()[:4]
 
     return render_template(
         "index.html",
@@ -521,37 +474,43 @@ def plant_details(plant_name):
     plant = get_plant_information(plant_name)
 
     if plant is None:
+
         flash(
             "This plant profile could not be found.",
             "error"
         )
+
         return redirect(url_for("plants"))
 
     image_filename = get_plant_image(
         plant["plant_name"]
     )
 
-    # Disease records are general references.
-    # The current database schema does not link them to individual plants.
-    diseases = []
+    diseases = get_plant_diseases(
+        plant["plant_id"]
+    )
 
     template_folder = os.path.join(BASE_DIR, "templates")
 
     if os.path.isfile(
         os.path.join(template_folder, "plant_details.html")
     ):
+
         details_template = "plant_details.html"
 
     elif os.path.isfile(
         os.path.join(template_folder, "plants_details.html")
     ):
+
         details_template = "plants_details.html"
 
     else:
+
         flash(
             "Plant details template could not be found.",
             "error"
         )
+
         return redirect(url_for("plants"))
 
     return render_template(
@@ -590,14 +549,17 @@ def upload():
     )
 
     if file is None:
+
         flash("Please select an image.")
         return redirect(url_for("index"))
 
     if file.filename == "":
+
         flash("No image selected.")
         return redirect(url_for("index"))
 
     if not allowed_file(file.filename):
+
         flash("Only PNG, JPG and JPEG images are allowed.")
         return redirect(url_for("index"))
 
@@ -616,11 +578,13 @@ def upload():
         file.save(image_path)
 
         # STEP 1: PREDICT PLANT
+
         predicted_plant, plant_confidence, plant_uncertain = (
             predict_plant(image_path)
         )
 
         # STEP 2: PREDICT DISEASE
+
         predicted_disease, disease_confidence = (
             predict_disease(image_path)
         )
@@ -632,7 +596,8 @@ def upload():
         print("Disease:", predicted_disease)
         print("Disease confidence:", disease_confidence)
 
-        # STEP 3: GET PLANT INFORMATION WHEN CONFIDENT
+        # STEP 3: GET PLANT INFORMATION
+
         plant = None
         image_filename = None
 
@@ -646,7 +611,8 @@ def upload():
                 predicted_plant
             )
 
-        # STEP 4: GET MATCHING DISEASE INFORMATION
+        # STEP 4: GET DISEASE INFORMATION
+
         healthy_prediction = (
             normalize_disease_name(predicted_disease)
             == "healthy"
@@ -663,6 +629,7 @@ def upload():
         diseases = [disease_info] if disease_info else []
 
         # STEP 5: DISPLAY RESULTS
+
         return render_template(
             "result.html",
             predicted_plant=predicted_plant,
@@ -686,7 +653,10 @@ def upload():
 
         return render_template(
             "result.html",
-            error="The image could not be analyzed. Please try another clear JPG or PNG image.",
+            error=(
+                "The image could not be analyzed. "
+                "Please try another clear JPG or PNG image."
+            ),
             uploaded_image=filename
         )
 
@@ -720,15 +690,12 @@ if __name__ == "__main__":
     print("FLORA - Himalayan Plant Disease System")
     print("------------------------------------")
 
-    print("Plant model: Loaded")
-    print("Disease model: Loaded")
+    print("Plant information:", len(PLANTS_DATA))
+    print("Disease references:", len(DISEASES_DATA))
+    print("Plant-disease relationships:", len(PLANT_DISEASES_DATA))
+    print("AI models: Load when an image is uploaded")
     print("Disease categories:", len(DISEASE_CLASSES))
     print("Disease classes:", DISEASE_CLASSES)
-
-    print(
-        "Plant confidence threshold:",
-        PLANT_CONFIDENCE_THRESHOLD
-    )
 
     print("\nStarting Flask server...")
 

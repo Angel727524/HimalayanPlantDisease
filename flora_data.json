@@ -1,0 +1,511 @@
+{
+    "plants": [
+        {
+            "plant_id": 1,
+            "plant_name": "Rhododendron",
+            "scientific_name": "Rhododendron arboreum Sm.",
+            "local_name": "Laliguras (लालीगुराँस)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "Yes",
+            "description": "Rhododendron arboreum is an evergreen Himalayan tree and the national flower of Nepal. It produces clusters of bright red, pink, or white flowers and is commonly found in mountain forests.",
+            "habitat": "Mountain forests, temperate forests, and forest margins of the Himalayas.",
+            "altitude_range": "1500–3600 m",
+            "uses": "Flowers are used traditionally as food and for beverages. The plant also has traditional medicinal uses and is important culturally and environmentally in Nepal.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 2,
+            "plant_name": "Timur",
+            "scientific_name": "Zanthoxylum armatum DC.",
+            "local_name": "Timur (टिमुर)",
+            "organism_type": "Plant",
+            "life_form": "Shrub",
+            "is_medicinal": "Yes",
+            "description": "Timur is a spiny aromatic shrub or small tree native to the Himalayan region. Its fruits have a characteristic spicy and citrus-like flavor.",
+            "habitat": "Open places, forest undergrowth, and subtropical to temperate Himalayan areas.",
+            "altitude_range": "1000–2500 m",
+            "uses": "Fruits and seeds are widely used as a spice and traditional medicine. Different plant parts have been traditionally used for digestive problems, toothache, fever, and other conditions.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 3,
+            "plant_name": "Kutki",
+            "scientific_name": "Neopicrorhiza scrophulariiflora (Pennell) D.Y.Hong",
+            "local_name": "Kutki (कुटकी)",
+            "organism_type": "Plant",
+            "life_form": "Herb",
+            "is_medicinal": "Yes",
+            "description": "Kutki is a small perennial Himalayan medicinal herb with a short rhizome and basal leaves. It is an important high-altitude medicinal plant.",
+            "habitat": "Alpine and subalpine grasslands, rocky slopes, and moist Himalayan habitats.",
+            "altitude_range": "3500–4800 m",
+            "uses": "The rhizome is traditionally used in herbal medicine and is an important medicinal plant collected and traded in Himalayan regions.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 4,
+            "plant_name": "Yarsagumba",
+            "scientific_name": "Ophiocordyceps sinensis (Berk.) G.H.Sung et al.",
+            "local_name": "Yarsagumba (यार्सागुम्बा)",
+            "organism_type": "Fungus",
+            "life_form": "Fungus",
+            "is_medicinal": "Yes",
+            "description": "Yarsagumba is a parasitic fungus associated with insect larvae in high-altitude Himalayan grasslands. It is not a true plant and is included in this project as a Himalayan medicinal organism.",
+            "habitat": "High-altitude alpine meadows and grasslands of the Himalayan region.",
+            "altitude_range": "3000–5000 m",
+            "uses": "Traditionally collected and used in Himalayan and Tibetan medicinal practices. It is also an important non-timber forest product.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 5,
+            "plant_name": "Atis",
+            "scientific_name": "Aconitum heterophyllum Wall. ex Royle",
+            "local_name": "Atis / Ativisha (अतीस)",
+            "organism_type": "Plant",
+            "life_form": "Herb",
+            "is_medicinal": "Yes",
+            "description": "Atis is a perennial Himalayan medicinal herb belonging to the buttercup family. It is found mainly in subalpine and alpine regions.",
+            "habitat": "Subalpine and alpine grasslands and mountain slopes.",
+            "altitude_range": "3000–4500 m",
+            "uses": "The tuberous roots have been traditionally used in Himalayan and Ayurvedic medicine. It is an important medicinal plant in Nepal.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 6,
+            "plant_name": "Himalayan Raspberry",
+            "scientific_name": "Rubus ellipticus Sm.",
+            "local_name": "Ainselu (ऐँसेलु)",
+            "organism_type": "Plant",
+            "life_form": "Shrub",
+            "is_medicinal": "No",
+            "description": "Himalayan raspberry is a thorny shrub that produces small yellow to golden edible berries. It is common in hilly areas of Nepal.",
+            "habitat": "Open areas, forest margins, disturbed land, and hilly Himalayan regions.",
+            "altitude_range": "Approximately 1000–2500 m",
+            "uses": "The edible fruits are consumed fresh and may be used for traditional food products. The plant also contributes to local biodiversity and wildlife food resources.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 7,
+            "plant_name": "Himalayan Blueberry",
+            "scientific_name": "Vaccinium glaucoalbum Hook.f. ex C.B.Clarke",
+            "local_name": "Nilo Ainselu (निलो ऐँसेलु)",
+            "organism_type": "Plant",
+            "life_form": "Shrub",
+            "is_medicinal": "No",
+            "description": "Himalayan blueberry is an evergreen shrub producing dark bluish-black edible berries. It is associated with high-altitude Himalayan forests and thickets.",
+            "habitat": "High-altitude temperate forests, thickets, and forest margins of the eastern Himalayas.",
+            "altitude_range": "2600–3300 m",
+            "uses": "The berries are edible and are locally collected as a wild fruit. The plant is also valued for its ornamental foliage and ecological importance.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 8,
+            "plant_name": "Alder",
+            "scientific_name": "Alnus nepalensis D.Don",
+            "local_name": "Utis (उत्तिस)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "No",
+            "description": "Nepalese alder is a fast-growing deciduous tree important in Himalayan forests and agroforestry systems. It can improve soil fertility through nitrogen fixation.",
+            "habitat": "Stream banks, ravines, moist forests, slopes, and disturbed areas in the Himalayan foothills.",
+            "altitude_range": "500–3000 m",
+            "uses": "Used for fuelwood, charcoal, light construction, boxes, furniture parts, and erosion control. It is also planted for land restoration and agroforestry.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 9,
+            "plant_name": "Chir Pine",
+            "scientific_name": "Pinus roxburghii Sarg.",
+            "local_name": "Khote Salla / Rani Salla (खोटे सल्ला)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "No",
+            "description": "Chir pine is a tall evergreen conifer with long needles growing in groups of three. It is one of the characteristic pine species of the lower Himalayan region.",
+            "habitat": "Dry slopes, foothills, outer valleys, and temperate Himalayan forests.",
+            "altitude_range": "500–2700 m",
+            "uses": "Wood is used for construction and furniture, while resin is collected for industrial products. The species is also important for forestry and ecosystem services.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 10,
+            "plant_name": "Blue Pine",
+            "scientific_name": "Pinus wallichiana A.B.Jacks.",
+            "local_name": "Gobre Salla (गोब्रे सल्ला)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "No",
+            "description": "Blue pine is a tall evergreen Himalayan conifer with long blue-green needles. It is an important tree of mountain forests.",
+            "habitat": "Mountain valleys, slopes, river basins, and temperate Himalayan forests.",
+            "altitude_range": "1000–3300 m",
+            "uses": "The wood is used for construction and other timber purposes. Resin and other forest products may also be obtained from the tree.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 11,
+            "plant_name": "Juniper",
+            "scientific_name": "Juniperus indica Bertol.",
+            "local_name": "Dhupi (धुपी)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "Yes",
+            "description": "Black juniper is a Himalayan evergreen conifer that may grow as a shrub or small tree. It is particularly important in high-altitude Himalayan ecosystems and cultural practices.",
+            "habitat": "Mountain slopes, high-altitude forests, thickets, and rocky Himalayan areas.",
+            "altitude_range": "2600–5100 m",
+            "uses": "Leaves and twigs are traditionally burned as incense. Different plant parts have also been used traditionally in herbal medicine. Wood is used for poles and fuelwood.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 12,
+            "plant_name": "Himalayan Oak",
+            "scientific_name": "Quercus semecarpifolia Sm.",
+            "local_name": "Khasru (खस्रु)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "No",
+            "description": "Himalayan oak is an evergreen oak tree characteristic of upper temperate and subalpine Himalayan forests. It is an important forest species for soil and ecosystem stability.",
+            "habitat": "Moist temperate and subalpine forests, mountain ridges, and slopes.",
+            "altitude_range": "1700–3800 m",
+            "uses": "Provides fuelwood, fodder, leaf litter, and timber. It is also important for watershed protection, soil conservation, and Himalayan forest ecosystems.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 13,
+            "plant_name": "Himalayan Maple",
+            "scientific_name": "Acer oblongum Wall. ex DC.",
+            "local_name": "Phirphire (फिरफिरे)",
+            "organism_type": "Plant",
+            "life_form": "Tree",
+            "is_medicinal": "No",
+            "description": "Himalayan maple is a medium-sized evergreen or semi-deciduous tree found in moist Himalayan forests. It has distinctive oblong leaves and winged fruits.",
+            "habitat": "Moist forests, lower Himalayan foothills, and areas near streams.",
+            "altitude_range": "600–2000 m",
+            "uses": "Used for wood products including planks, boxes, plywood, agricultural implements, and household items. It is also planted as an ornamental tree.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:54:56"
+        },
+        {
+            "plant_id": 14,
+            "plant_name": "Jatamasi",
+            "scientific_name": "Nardostachys jatamansi (D.Don) DC.",
+            "local_name": "Jatamasi (जटामसी)",
+            "organism_type": "Plant",
+            "life_form": "Herb",
+            "is_medicinal": "Yes",
+            "description": "Jatamasi is a perennial aromatic Himalayan medicinal herb with a valuable rhizome. It grows mainly in high-altitude mountain environments.",
+            "habitat": "Subalpine and alpine grasslands, moist mountain slopes, and high-altitude Himalayan habitats.",
+            "altitude_range": "3200–5000 m",
+            "uses": "The aromatic rhizome is traditionally used in herbal medicine and for its fragrance. It is also used in incense and traditional preparations.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        },
+        {
+            "plant_id": 15,
+            "plant_name": "Chiraito",
+            "scientific_name": "Swertia chirayita (Roxb.) H.Karst.",
+            "local_name": "Chiraito (चिराइतो)",
+            "organism_type": "Plant",
+            "life_form": "Herb",
+            "is_medicinal": "Yes",
+            "description": "Chiraito is a bitter medicinal herb native to the Himalayan region. It is an important traditional medicinal plant of Nepal.",
+            "habitat": "Temperate mountain areas, forest margins, grasslands, and open slopes.",
+            "altitude_range": "1500–2500 m",
+            "uses": "The whole plant is traditionally used in herbal medicine, especially in preparations associated with fever and digestive complaints.",
+            "image_path": null,
+            "status": "Active",
+            "created_at": "2026-09-27 01:39:33",
+            "updated_at": "2026-09-27 01:51:11"
+        }
+    ],
+    "diseases": [
+        {
+            "disease_id": 1,
+            "disease_name": "Leaf Spot Disease",
+            "disease_type": "Fungal / Bacterial",
+            "description": "Leaf spot is a general disease symptom in which localized spots or lesions develop on leaves. Different fungal and bacterial pathogens can cause leaf spot, and the specific pathogen varies according to the host plant.",
+            "cause": "Common causes include fungal and bacterial pathogens. Infected plant debris, splashing water, rain, high humidity, and poor air circulation can contribute to disease development and spread.",
+            "symptoms": "Small tan, brown, reddish-brown, black, or yellow spots may appear on leaves. Spots can enlarge and merge into larger lesions. Severe infections may cause yellowing, leaf drop, or dieback.",
+            "treatment": "Remove and destroy severely infected leaves and plant material. Improve air circulation and reduce leaf wetness. Water plants in a way that keeps foliage as dry as possible. Appropriate fungicides or bactericides may be considered when suitable for the identified pathogen and host plant.",
+            "prevention": "Remove fallen infected leaves and plant debris. Avoid overhead watering when possible. Maintain good spacing and air circulation. Inspect plants regularly and remove infected material early.",
+            "severity": "Medium",
+            "reference_source": "University of Maryland Extension - Fungal Leaf Spots: https://www.extension.umd.edu/resource/fungal-leaf-spots-indoor-plants ; University of Georgia Extension - Leaf Spot: https://site.extension.uga.edu/lincoln/whats-that-disease-leaf-spot/",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 2,
+            "disease_name": "Powdery Mildew",
+            "disease_type": "Fungal",
+            "description": "Powdery mildew is a group of fungal diseases that produces a characteristic white or gray powdery growth on plant leaves and shoots.",
+            "cause": "Caused by several groups of powdery mildew fungi. Moderate temperatures, humidity, shade, and poor air circulation can favor disease development.",
+            "symptoms": "White or gray powder-like growth appears on the surface of leaves and shoots. Leaves may become yellow or brown, curl, become distorted, and eventually fall.",
+            "treatment": "Remove severely infected leaves and plant parts. Improve air circulation and growing conditions. For susceptible plants, an appropriate registered fungicide may be used according to the product label and plant requirements.",
+            "prevention": "Provide adequate spacing between plants, improve air circulation, avoid excessive shading, and monitor plants regularly for early symptoms.",
+            "severity": "Medium",
+            "reference_source": "Iowa State University Extension - Powdery Mildew: https://yardandgarden.extension.iastate.edu/encyclopedia/powdery-mildew-ornamental-plants ; University of Maryland Extension - Powdery Mildew: https://www.extension.umd.edu/resource/powdery-mildew-indoor-plants ; UC IPM - Powdery Mildew: https://ipm.ucanr.edu/home-and-landscape/powdery-mildew-on-ornamentals/",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 3,
+            "disease_name": "Rust Disease",
+            "disease_type": "Fungal",
+            "description": "Rust disease is a group of fungal diseases that commonly produces yellow, orange, reddish, or brown spots and spore-producing structures on plant tissues.",
+            "cause": "Caused by rust fungi belonging to several genera, including Puccinia, Uromyces, and related groups. Some rust fungi require more than one host species to complete their life cycle.",
+            "symptoms": "Small yellow, orange, red, or brown spots or raised pustules may develop on leaves or stems. Orange or rust-colored spores may be visible, particularly on the underside of leaves. Severe infections can cause yellowing, browning, and premature leaf death.",
+            "treatment": "Remove and destroy severely infected plant material. Improve air circulation and avoid prolonged leaf wetness. Where appropriate, a registered fungicide can be used according to the product label and the specific host-pathogen combination.",
+            "prevention": "Inspect plants regularly, remove infected leaves and plant debris, improve air circulation, and avoid unnecessary overhead watering.",
+            "severity": "Medium",
+            "reference_source": "Penn State Extension - Rust Diseases: https://extension.psu.edu/turfgrass-diseases-rust-diseases-causal-fungi-puccinia-spp ; University of Minnesota Extension - Rust Symptoms: https://apps.extension.umn.edu/garden/diagnose/plant/annualperennial/grass/",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 4,
+            "disease_name": "Root Rot",
+            "disease_type": "Fungal / Oomycete",
+            "description": "Root rot is a disease condition in which plant roots become damaged, discolored, and decayed. It is frequently associated with excessive moisture and poorly drained soil.",
+            "cause": "Can be caused by several soil-borne fungi and fungus-like organisms including Pythium, Phytophthora, Rhizoctonia, and Fusarium. Excessive moisture and poor drainage can increase disease risk.",
+            "symptoms": "Plants may show wilting, yellowing, poor growth, leaf browning, and dieback. Diseased roots may become brown or black, soft, and damaged.",
+            "treatment": "Improve soil drainage and avoid excessive watering. Remove severely damaged roots or plant material where practical. Severely affected plants may need to be removed. Treatment should be based on correct diagnosis of the causal organism.",
+            "prevention": "Use well-drained soil, avoid overwatering, prevent standing water, use clean planting material, and remove severely infected plants or roots.",
+            "severity": "High",
+            "reference_source": "University of Maryland Extension - Root Rots: https://extension.umd.edu/resource/root-rots-indoor-plants ; Penn State Extension - Fungal Root Rots: https://extension.psu.edu/fungal-root-rots-and-chemical-fungicide-use",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 5,
+            "disease_name": "Anthracnose",
+            "disease_type": "Fungal",
+            "description": "Anthracnose is a group of fungal diseases that can affect leaves, stems, shoots, flowers, and fruits depending on the host plant and pathogen.",
+            "cause": "Caused by several fungal pathogens, commonly including species of Colletotrichum and related fungi. Warm, moist conditions can encourage disease development and spread.",
+            "symptoms": "Symptoms vary by host but can include brown, tan, reddish, or black leaf spots, sunken lesions on stems or fruits, dead tissue, premature leaf drop, and dieback of infected shoots.",
+            "treatment": "Remove and destroy infected plant material. Improve air circulation and avoid working with plants when foliage is wet. Where appropriate, registered fungicides may be used according to the label and the specific host.",
+            "prevention": "Use healthy planting material, remove infected debris, avoid unnecessary overhead irrigation, maintain good air circulation, and sanitize tools after working with infected plants.",
+            "severity": "Medium",
+            "reference_source": "University of Minnesota Extension - Anthracnose: https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/anthracnose-of-cucurbits ; Penn State Extension - Anthracnose of Brambles: https://extension.psu.edu/anthracnose-in-home-plantings-of-brambles",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 6,
+            "disease_name": "Downy Mildew",
+            "disease_type": "Oomycete",
+            "description": "Downy mildew is a group of plant diseases caused by oomycete pathogens. It can produce yellow or pale leaf spots and characteristic downy growth on the underside of leaves under humid conditions.",
+            "cause": "Caused by oomycete pathogens including species of Peronospora, Plasmopara, Pseudoperonospora, and Bremia. Cool, humid, and wet conditions can favor infection.",
+            "symptoms": "Pale green or yellow angular spots develop on the upper leaf surface. Under humid conditions, gray, white, or purplish downy growth may appear on the underside of leaves. Infected leaves can yellow, brown, wilt, and die.",
+            "treatment": "Remove infected plant material where practical, improve air circulation, and reduce periods of leaf wetness. For susceptible crops, appropriate fungicide or oomycete-management products may be used according to the label and host plant.",
+            "prevention": "Avoid overcrowding, improve air circulation, reduce prolonged leaf wetness, use drip or ground-level irrigation when possible, and remove infected plant debris.",
+            "severity": "High",
+            "reference_source": "Penn State Extension - Downy Mildew: https://extension.psu.edu/downy-mildew ; NC State Extension - Downy Mildew: https://content.ces.ncsu.edu/downy-mildew-of-bedding-plants ; University of Maryland Extension - Downy Mildew: https://www.extension.umd.edu/resource/downy-mildew-flowers",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        },
+        {
+            "disease_id": 7,
+            "disease_name": "Blight",
+            "disease_type": "Fungal / Bacterial",
+            "description": "Blight is a general plant disease term describing rapid browning, death, or decay of leaves, shoots, stems, flowers, or other plant tissues. Different types of blight have different causes.",
+            "cause": "Depending on the type of blight, causes can include fungal, oomycete, or bacterial pathogens. The exact causal organism must be determined for accurate diagnosis and treatment.",
+            "symptoms": "Water-soaked or discolored spots may develop and enlarge rapidly. Leaves, shoots, stems, flowers, or fruits may turn brown or black and die. Severe infections can result in extensive tissue death and plant decline.",
+            "treatment": "Remove and destroy severely infected plant material. Improve air circulation and reduce leaf wetness. Avoid spreading the pathogen through contaminated tools, water, or plant debris. Specific treatment depends on the type of blight and causal pathogen.",
+            "prevention": "Use healthy planting material, maintain good spacing and air circulation, avoid unnecessary overhead watering, remove infected plant debris, and sanitize tools between infected and healthy plants.",
+            "severity": "High",
+            "reference_source": "Penn State Extension - Diagnosing Common Plant Problems: https://extension.psu.edu/diagnosing-common-problems-in-the-vegetable-garden ; University of Minnesota Extension - Managing Plant Diseases: https://extension.umn.edu/garden-and-home/yard-and-garden/yard-and-garden-problems/managing-plant-diseases-in-the-home-garden",
+            "created_at": "2026-09-27 01:40:58",
+            "updated_at": "2026-09-27 01:57:32"
+        }
+    ],
+    "plant_diseases": [
+        {
+            "relationship_id": 1,
+            "plant_id": 1,
+            "disease_id": 1,
+            "notes": "Leaf spot has been documented on Rhododendron arboreum in Nepal."
+        },
+        {
+            "relationship_id": 2,
+            "plant_id": 1,
+            "disease_id": 2,
+            "notes": "Powdery mildew is reported as a common disease of Rhododendron."
+        },
+        {
+            "relationship_id": 3,
+            "plant_id": 1,
+            "disease_id": 3,
+            "notes": "Rust is a documented disease affecting Rhododendron species."
+        },
+        {
+            "relationship_id": 4,
+            "plant_id": 2,
+            "disease_id": 1,
+            "notes": "Round leaf spot disease has been documented on Zanthoxylum armatum."
+        },
+        {
+            "relationship_id": 5,
+            "plant_id": 2,
+            "disease_id": 3,
+            "notes": "Leaf rust has been documented on Zanthoxylum armatum."
+        },
+        {
+            "relationship_id": 6,
+            "plant_id": 7,
+            "disease_id": 2,
+            "notes": "Vaccinium glaucoalbum is reported as susceptible to powdery mildew."
+        },
+        {
+            "relationship_id": 7,
+            "plant_id": 7,
+            "disease_id": 4,
+            "notes": "Vaccinium glaucoalbum is reported as susceptible to root rot."
+        },
+        {
+            "relationship_id": 8,
+            "plant_id": 8,
+            "disease_id": 2,
+            "notes": "Powdery mildew has been documented on Alnus nepalensis in a Nepal forest pathogen survey."
+        },
+        {
+            "relationship_id": 9,
+            "plant_id": 8,
+            "disease_id": 4,
+            "notes": "Root and collar rot caused by Phytophthora species is documented in alder; verify the exact pathogen for Alnus nepalensis before using this as a species-specific diagnosis."
+        },
+        {
+            "relationship_id": 10,
+            "plant_id": 9,
+            "disease_id": 4,
+            "notes": "Root rot/damping-off has been documented in Pinus roxburghii nurseries."
+        },
+        {
+            "relationship_id": 11,
+            "plant_id": 9,
+            "disease_id": 7,
+            "notes": "Needle blight/needle cast diseases are documented on Pinus roxburghii."
+        },
+        {
+            "relationship_id": 12,
+            "plant_id": 10,
+            "disease_id": 3,
+            "notes": "Stem/needle rust has been documented on Pinus wallichiana."
+        },
+        {
+            "relationship_id": 13,
+            "plant_id": 10,
+            "disease_id": 4,
+            "notes": "Root rot has been recorded on Pinus wallichiana."
+        },
+        {
+            "relationship_id": 14,
+            "plant_id": 10,
+            "disease_id": 7,
+            "notes": "Needle blight caused by Lophodermium species has been documented on Pinus wallichiana."
+        },
+        {
+            "relationship_id": 15,
+            "plant_id": 11,
+            "disease_id": 4,
+            "notes": "Root rot is documented among diseases affecting Juniper species."
+        },
+        {
+            "relationship_id": 16,
+            "plant_id": 11,
+            "disease_id": 7,
+            "notes": "Twig and foliage blight diseases are documented among Juniper species."
+        },
+        {
+            "relationship_id": 17,
+            "plant_id": 11,
+            "disease_id": 3,
+            "notes": "Rust diseases are documented among Juniper species."
+        },
+        {
+            "relationship_id": 18,
+            "plant_id": 12,
+            "disease_id": 2,
+            "notes": "Quercus semecarpifolia is reported as susceptible to powdery mildew."
+        },
+        {
+            "relationship_id": 19,
+            "plant_id": 13,
+            "disease_id": 5,
+            "notes": "Anthracnose is reported among diseases associated with Acer oblongum."
+        },
+        {
+            "relationship_id": 20,
+            "plant_id": 13,
+            "disease_id": 4,
+            "notes": "Phytophthora and Armillaria root rots are reported among diseases associated with Acer oblongum."
+        },
+        {
+            "relationship_id": 21,
+            "plant_id": 14,
+            "disease_id": 4,
+            "notes": "Root rot is listed among diseases affecting cultivated Nardostachys jatamansi."
+        },
+        {
+            "relationship_id": 22,
+            "plant_id": 14,
+            "disease_id": 1,
+            "notes": "Brown/leaf spot is listed among diseases affecting cultivated Nardostachys jatamansi."
+        },
+        {
+            "relationship_id": 23,
+            "plant_id": 15,
+            "disease_id": 1,
+            "notes": "Alternaria, Curvularia, and other leaf spot diseases have been documented on Swertia chirayita in Nepal."
+        },
+        {
+            "relationship_id": 24,
+            "plant_id": 15,
+            "disease_id": 7,
+            "notes": "Colletotrichum leaf blight has been documented on Swertia chirayita in Nepal."
+        },
+        {
+            "relationship_id": 25,
+            "plant_id": 15,
+            "disease_id": 4,
+            "notes": "Fusarium and Rhizoctonia-associated root diseases have been documented on Swertia chirayita."
+        }
+    ]
+}
